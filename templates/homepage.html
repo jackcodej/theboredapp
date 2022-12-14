@@ -2,29 +2,37 @@
 {% block title %}The Bored App{% endblock %}
 
 {% block body %}
-<h1>Welcome my bored friend!</h1>
+
+{% if "user_id" not in session %}
+
+<h1>Welcome to the bored application!</h1>
     <h2>Register an account</h2>
   <form action="/create-account" method="POST">
     <p>Name: <input type="text" name="name"></p>
     <p>Email: <input type="text" name="email"></p>
     <p>Password: <input type="password" name="password"></p>
     <p>Zipcode: <input type="text" name="zipcode"></p>
-    <p><input type="submit"></p>
+    <p><input type="submit" value="Register"></p>
   </form>
   <h2>Sign in</h2>
   <form action="/sign-in" method="POST">
     <p>Email: <input type="text" name="email"></p>
     <p>Password: <input type="password" name="password"></p>
-    <p><input type="submit"></p>
+    <p><input type="submit" value="Login"></p>
   </form>
+{% endif %}
+
+{% if "user_id" in session %}
+<h1>What activity will you choose to do today?</h1>
+  <form action="/activity/history">
+    My History
+    <input type="submit" value="View my history">
+  </form>
+{% endif %}
 
   <form action="/activity/search">
     Test API
-    <input type="submit">
+    <input type="submit" value="Test API">
   </form>
-
-  <form action="/test">
-    Test Session
-    <input type="submit">
-  </form>
+  <p></p>
   {% endblock %}

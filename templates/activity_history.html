@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %} - User History{% endblock %}
+
+{% block body %}
+{% for log in user_history %}
+    <p>History Id: {{ log.history_id }}</p>
+    <p>User Id: {{ log.user_id }}</p>
+    <p>Activity Id: {{ log.activity_id }}</p>
+    <p>Last clicked: {{ log.last_clicked }}</p>
+    <p></p>
+{% endfor %}
+
+<form action="/">
+    <input type="submit" value="Return to home">
+</form>
+
+{% endblock %}

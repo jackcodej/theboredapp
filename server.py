@@ -6,6 +6,8 @@ from model import connect_to_db, db
 import crud
 import requests
 
+from datetime import date
+
 
 # Better logging from jinja2 using the StrictUndefined class
 from jinja2 import StrictUndefined
@@ -91,22 +93,25 @@ def find_activity():
     else:
         activity = crud.get_activity_by_key(data["key"])
     # If user is signed in create a new record in history
-    # bug here
     if "user_id" in session:
         new_history_log = crud.create_history_log(user_id=session["user_id"], 
                                                   activity_id=crud.get_activity_by_key(data["key"]).activity_id, 
-                                                  last_clicked="12/14/2022"
+                                                  last_clicked=date.today().strftime("%B %d, %Y") #not getting exact time when doing this for some reason
                                                   )
         db.session.add(new_history_log)
         db.session.commit()
-# May need to create a new template for displaying returned data
     return render_template('activity.html', activity=activity)
 
-@app.route('/test')
-def test():
-    print(session["user_id"])
 
-    return redirect('/')
+@app.route('/activity/history')
+def get_activity_by_user():
+
+    if "user_id" in session:
+        user_history = crud.get_user_history(session["user_id"])
+    else:
+        flash('Please login to your account or register to have access to this feature.')
+
+    return render_template('activity_history.html', user_history=user_history)
 
 
 # Python3, only run the lines if server.py is ran directly

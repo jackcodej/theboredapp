@@ -3,26 +3,17 @@
 {% block title %} - Details{% endblock %}
 
 {% block body %}
-
 <ul>
-    <li>
-        Activity Type - {{ activity.a_type }}
-    </li>
-    <li>
-        Activity - {{ activity.activity }}
-    </li>
-    <li>
-        Participant Numbers - {{ activity.participants }}
-    </li>
-    <li>
-        Price level - {{ activity.price }}
-    </li>
-    <li>
-        Link - {{ activity.link }}
-    </li>
-    <li>
-        Accessibility level - {{ activity.accessibility }}
-    </li>
+    <li>Activity Type - {{ activity.a_type }}</li>
+    <li>Activity - {{ activity.activity }}</li>
+    <li>Participant Numbers - {{ activity.participants }}</li>
+    <li>Price level - {{ activity.price }}</li>
+    <li>Link - {{ activity.link }}</li>
+    <li>Accessibility level - {{ activity.accessibility }}</li>
 </ul>
+
+<form action="/">
+    <input type="submit" value="Return to home">
+</form>
 
 {% endblock %}
