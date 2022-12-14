@@ -1,3 +1,6 @@
 [
-    {"user_id": 1, "activity_id": 1, "last_clicked": "12/13/2022"}
+    {"user_id": 1, "activity_id": 1, "last_clicked": "12/13/2022"},
+    {"user_id": 1, "activity_id": 2, "last_clicked": "12/13/2022"},
+    {"user_id": 1, "activity_id": 1, "last_clicked": "12/14/2022"},
+    {"user_id": 2, "activity_id": 2, "last_clicked": "12/13/2022"}
 ]

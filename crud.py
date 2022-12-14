@@ -53,9 +53,15 @@ def get_all_activities():
 
 
 def get_activity_by_id(activity_id):
-    """Return a specific activity"""
+    """Return a specific activity by id"""
 
     return Activity.query.filter(Activity.activity_id == activity_id).first()
+
+
+def get_activity_by_key(key):
+    """Return a specific activity by key"""
+
+    return Activity.query.filter(Activity.key == key).first()
 
 # Query to get activity based on parameters
 
