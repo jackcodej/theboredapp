@@ -92,15 +92,21 @@ def find_activity():
         activity = crud.get_activity_by_key(data["key"])
     # If user is signed in create a new record in history
     # bug here
-    # if session["user_id"]:
-    #     new_history_log = crud.create_history_log(user_id=session["user_id"], 
-    #                                               activity_id=crud.get_activity_by_key(data["key"]), 
-    #                                               last_clicked="12/14/2022"
-    #                                               )
-    #     db.session.add(new_history_log)
-    #     db.session.commit()
+    if "user_id" in session:
+        new_history_log = crud.create_history_log(user_id=session["user_id"], 
+                                                  activity_id=crud.get_activity_by_key(data["key"]).activity_id, 
+                                                  last_clicked="12/14/2022"
+                                                  )
+        db.session.add(new_history_log)
+        db.session.commit()
 # May need to create a new template for displaying returned data
-    return render_template('activity.html', activity = activity)
+    return render_template('activity.html', activity=activity)
+
+@app.route('/test')
+def test():
+    print(session["user_id"])
+
+    return redirect('/')
 
 
 # Python3, only run the lines if server.py is ran directly
