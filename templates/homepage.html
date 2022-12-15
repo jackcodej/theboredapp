@@ -4,7 +4,6 @@
 {% block body %}
 
 {% if "user_id" not in session %}
-
 <h1>Welcome to the bored application!</h1>
     <h2>Register an account</h2>
   <form action="/create-account" method="POST">
@@ -32,7 +31,47 @@
 
   <form action="/activity/search">
     Test API
-    <input type="submit" value="Test API">
+    <input type="submit" value="Test get API">
   </form>
   <p></p>
+  <form action="/activity/search/filter">
+    <p>key: <input type="number" name="key"></p>
+    <p>
+      <label>Accessibility Level-----------------------------------------------------------------</label></label>
+      <p>
+        <!-- Will need to add logic to not allow nonsense inputs for the range -->
+        Low:<input type="number" name="min_accessibility" max="100" min="0">
+        High:<input type="number" name="max_accessibility" max="100" min="0">
+      </p>
+    </p>
+    <p>
+      <label>Select an activity type</label>
+      <select>
+        <option value =""></option>
+        <option value="">Surprise me!</option>
+        <option value="diy">Do it yourself (diy)</option>
+        <option value="cooking">Cooking</option>
+        <option value="charity">Charity</option>
+        <option value="social">Social</option>
+        <option value="music">Music</option>
+        <option value="recreational">Recreational</option>
+        <option value="relaxation">Relaxation</option>
+        <option value="education">Education</option>
+        <option value="relaxing">Relaxing</option>
+        <option value="busywork">Busywork</option>
+      </select>
+    </p>
+    <p>Participants: <input type="number" name="participants" max="5" min="1"></p>
+    
+    <p>
+      <label>Price Range-----------------------------------------------------------------</label>
+      <p>
+        <!-- Will need to add logic to not allow nonsense inputs for the range -->
+        Low:<input type="number" name="min_price" max="100"> High:<input type="number" name="max_price" max="100">
+      </p>
+    </p>
+
+    <input type="submit" value="Test filter get">
+  </form>
+  
   {% endblock %}

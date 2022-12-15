@@ -5,6 +5,7 @@ from flask import (Flask, render_template, request, flash, session, redirect, re
 from model import connect_to_db, db
 import crud
 import requests
+import helper
 
 from datetime import date
 
@@ -73,6 +74,7 @@ def sign_in():
 
 @app.route('/activity/search')
 def find_activity():
+    """Get random activity from boredapi."""
 
     url = 'https://www.boredapi.com/api/activity/'
 
@@ -103,8 +105,41 @@ def find_activity():
     return render_template('activity.html', activity=activity)
 
 
+@app.route('/activity/search/filter')
+def find_filtered_activity():
+    """Query for an activity from boredapi with arguments"""
+
+    url = 'https://www.boredapi.com/api/activity/'
+
+    # Get all values from form **Not request.form because this is not a post request
+    # Need to clarify the exact reason why we use request.args.get instead of request.form
+    key = request.args.get('key', '')
+    a_type = request.args.get('a_type', '')
+    participants = request.args.get('participants', '')
+    min_price = request.args.get('min_price', '')
+    max_price = request.args.get('max_price', '')
+    min_accessibility = request.args.get('min_accessibility', '')
+    max_accessibility = request.args.get('max_accessibility', '')
+
+    payload = {
+        'key': key,
+        'type': a_type,
+        'participants': participants,
+        # API only accepts ranges between 0.0 and 1.0, so values must be divided
+        'minprice': int(min_price)/100,
+        'maxprice': int(max_price)/100,
+        'minaccessibility': int(min_accessibility)/100,
+        'maxaccessibility': int(max_accessibility)/100,
+    }
+
+    res = requests.get(url, params=payload)
+    data = res.json()
+    return data
+
+
 @app.route('/activity/history')
 def get_activity_by_user():
+    """Get the activity history of browser's session user_id"""
 
     if "user_id" in session:
         user_history = crud.get_user_history(session["user_id"])
