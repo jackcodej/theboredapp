@@ -1,18 +1,20 @@
 """Helper functions to reduce duplicate code in server.py"""
 
-# Here are all of the functions that the helper should do
+def convert_arg_to_percent(range_str):
+    """Converts range string to float"""
 
-"""
-TO-DO
+    if range_str != '':
+        range_str = int(range_str)/100
+
+    return range_str
 
 
---Not sure if I want the helper functions to commit/add to db, maybe it should respond
-with the new instances?
+def check_range_values(min, max):
+    """Swaps min and max if min is greater than max"""
 
+    if min > max:
+        temp = min
+        min = max
+        max = temp
 
--Check if activity is stored in activity table, return T/F
--Check if user is signed in return T/F
--Instantiating new activities maybe 
--Map response data from boredapi
-
-"""
+    return min, max

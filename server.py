@@ -88,31 +88,15 @@ def find_filtered_activity():
     min_accessibility = request.args.get('min_accessibility', '')
     max_accessibility = request.args.get('max_accessibility', '')
 
-    #TODO: All of these little functions can go into my helper from 93 to 115
-    # Conditionals for range values to turn into percentage
-    if min_price != '':
-        min_price = int(min_price)/100
+    # Invoke helper functions to process values
+    min_price = helper.convert_arg_to_percent(min_price)
+    max_price = helper.convert_arg_to_percent(max_price)
+    min_accessibility = helper.convert_arg_to_percent(min_accessibility)
+    max_accessibility = helper.convert_arg_to_percent(max_accessibility)
 
-    if max_price != '':
-        max_price = int(max_price)/100
-
-    if min_accessibility != '':
-        min_accessibility = int(min_accessibility)/100
-
-    if max_accessibility != '':
-        max_accessibility = int(max_accessibility)/100
-
-    # Handle if range of price is not in correct order
-    if min_price and max_price and (min_price > max_price):
-        temp_min = min_price
-        min_price = max_price
-        max_price = temp_min
-        
-    # Handle if range of accessibility is not in correct order
-    if min_accessibility and max_accessibility and (min_accessibility > max_accessibility):
-        temp_min = min_accessibility
-        min_accessibility = max_accessibility
-        max_accessibility = temp_min
+    # Invoke helper functions to check min/max values
+    min_price, max_price = helper.check_range_values(min_price, max_price)
+    min_accessibility, max_accessibility = helper.check_range_values(min_accessibility, max_accessibility)        
 
     payload = {
         'key': key,
