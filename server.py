@@ -88,7 +88,7 @@ def find_filtered_activity():
     min_accessibility = request.args.get('min_accessibility', '')
     max_accessibility = request.args.get('max_accessibility', '')
 
-
+    #TODO: All of these little functions can go into my helper from 93 to 115
     # Conditionals for range values to turn into percentage
     if min_price != '':
         min_price = int(min_price)/100
@@ -101,13 +101,23 @@ def find_filtered_activity():
 
     if max_accessibility != '':
         max_accessibility = int(max_accessibility)/100
-    
+
+    # Handle if range of price is not in correct order
+    if min_price and max_price and (min_price > max_price):
+        temp_min = min_price
+        min_price = max_price
+        max_price = temp_min
+        
+    # Handle if range of accessibility is not in correct order
+    if min_accessibility and max_accessibility and (min_accessibility > max_accessibility):
+        temp_min = min_accessibility
+        min_accessibility = max_accessibility
+        max_accessibility = temp_min
 
     payload = {
         'key': key,
         'type': a_type,
         'participants': participants,
-        # API only accepts ranges between 0.0 and 1.0, so values must be divided
         'minprice': min_price,
         'maxprice': max_price,
         'minaccessibility': min_accessibility,
@@ -117,30 +127,37 @@ def find_filtered_activity():
     res = requests.get(url, params=payload)
     data = res.json()
 
-    # If activity is not already stored in the activity table create a new record
-    # Duplicate code this can all be a single class since it is reused, should ask Ione before moving just in case
-    if not crud.get_activity_by_key(data["key"]):
-        activity = crud.create_activity(activity=data["activity"], 
-                                            key=data["key"], 
-                                            a_type=data["type"], 
-                                            link=data["link"], 
-                                            price=data["price"], 
-                                            participants=data["participants"], 
-                                            accessibility=data["accessibility"]
-                                            )
-        db.session.add(activity)
-        db.session.commit()
-    else:
-        activity = crud.get_activity_by_key(data["key"])
-    # If user is signed in create a new record in history
-    if "user_id" in session:
-        new_history_log = crud.create_history_log(user_id=session["user_id"], 
-                                                  activity_id=crud.get_activity_by_key(data["key"]).activity_id, 
-                                                  last_clicked=date.today().strftime("%B %d, %Y") #not getting exact time when doing this for some reason
-                                                  )
-        db.session.add(new_history_log)
-        db.session.commit()
-    return render_template('activity.html', activity=activity)
+    try:
+        # If activity is not already stored in the activity table create a new record
+        if not crud.get_activity_by_key(data["key"]):
+            activity = crud.create_activity(activity=data["activity"], 
+                                                key=data["key"], 
+                                                a_type=data["type"], 
+                                                link=data["link"], 
+                                                price=data["price"], 
+                                                participants=data["participants"], 
+                                                accessibility=data["accessibility"]
+                                                )
+            db.session.add(activity)
+            db.session.commit()
+        else:
+            activity = crud.get_activity_by_key(data["key"])
+        # If user is signed in create a new record in history
+        if "user_id" in session:
+            new_history_log = crud.create_history_log(user_id=session["user_id"], 
+                                                    activity_id=crud.get_activity_by_key(data["key"]).activity_id, 
+                                                    last_clicked=date.today().strftime("%B %d, %Y") #not getting exact time when doing this for some reason
+                                                    )
+            db.session.add(new_history_log)
+            db.session.commit()
+        return render_template('activity.html', activity=activity)
+    except:
+        if data.get('error'):
+            flash("This activity doesn't exist :(")
+        else:
+            flash("An error has occurred, please try again")
+
+        return redirect("/")
 
 
 @app.route('/activity/history')
