@@ -73,14 +73,52 @@ def sign_in():
 
 
 @app.route('/activity/search')
-def find_activity():
-    """Get random activity from boredapi."""
+def find_filtered_activity():
+    """Query for an activity from boredapi with arguments"""
 
     url = 'https://www.boredapi.com/api/activity/'
 
-    res = requests.get(url)
+    # Get all values from form **Not request.form because this is not a post request
+    # Need to clarify the exact reason why we use request.args.get instead of request.form
+    key = request.args.get('key', '')
+    a_type = request.args.get('a_type', '')
+    participants = request.args.get('participants', '')
+    min_price = request.args.get('min_price', '')
+    max_price = request.args.get('max_price', '')
+    min_accessibility = request.args.get('min_accessibility', '')
+    max_accessibility = request.args.get('max_accessibility', '')
+
+
+    # Conditionals for range values to turn into percentage
+    if min_price != '':
+        min_price = int(min_price)/100
+
+    if max_price != '':
+        max_price = int(max_price)/100
+
+    if min_accessibility != '':
+        min_accessibility = int(min_accessibility)/100
+
+    if max_accessibility != '':
+        max_accessibility = int(max_accessibility)/100
+    
+
+    payload = {
+        'key': key,
+        'type': a_type,
+        'participants': participants,
+        # API only accepts ranges between 0.0 and 1.0, so values must be divided
+        'minprice': min_price,
+        'maxprice': max_price,
+        'minaccessibility': min_accessibility,
+        'maxaccessibility': max_accessibility,
+    }
+
+    res = requests.get(url, params=payload)
     data = res.json()
+
     # If activity is not already stored in the activity table create a new record
+    # Duplicate code this can all be a single class since it is reused, should ask Ione before moving just in case
     if not crud.get_activity_by_key(data["key"]):
         activity = crud.create_activity(activity=data["activity"], 
                                             key=data["key"], 
@@ -103,38 +141,6 @@ def find_activity():
         db.session.add(new_history_log)
         db.session.commit()
     return render_template('activity.html', activity=activity)
-
-
-@app.route('/activity/search/filter')
-def find_filtered_activity():
-    """Query for an activity from boredapi with arguments"""
-
-    url = 'https://www.boredapi.com/api/activity/'
-
-    # Get all values from form **Not request.form because this is not a post request
-    # Need to clarify the exact reason why we use request.args.get instead of request.form
-    key = request.args.get('key', '')
-    a_type = request.args.get('a_type', '')
-    participants = request.args.get('participants', '')
-    min_price = request.args.get('min_price', '')
-    max_price = request.args.get('max_price', '')
-    min_accessibility = request.args.get('min_accessibility', '')
-    max_accessibility = request.args.get('max_accessibility', '')
-
-    payload = {
-        'key': key,
-        'type': a_type,
-        'participants': participants,
-        # API only accepts ranges between 0.0 and 1.0, so values must be divided
-        'minprice': int(min_price)/100,
-        'maxprice': int(max_price)/100,
-        'minaccessibility': int(min_accessibility)/100,
-        'maxaccessibility': int(max_accessibility)/100,
-    }
-
-    res = requests.get(url, params=payload)
-    data = res.json()
-    return data
 
 
 @app.route('/activity/history')
