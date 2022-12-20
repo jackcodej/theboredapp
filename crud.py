@@ -39,10 +39,10 @@ def get_user_history(user_id):
     return History.query.filter(History.user_id == user_id).all()
 
 
-# Incomplete need to use date time here
+#TODO Incomplete need to use date time here
 def get_recent_activity():
     """Return all user's recent activity"""
-# Need to change the filter logic for the date and use present time
+#TODO Need to change the filter logic for the date and use (present_time - 30 days)
     return History.query.filter(History.last_clicked > 5).all()
 
 

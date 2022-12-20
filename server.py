@@ -1,6 +1,6 @@
 """Server for theboredapp"""
 
-from flask import (Flask, render_template, request, flash, session, redirect, request)
+from flask import (Flask, render_template, request, flash, session, redirect, request, jsonify)
 
 from model import connect_to_db, db
 import crud
@@ -40,7 +40,7 @@ def create_account():
     zip_code = request.form.get("zipcode")
 
     # Conditional to check if an account with the provided email already exists
-    if crud.get_user_by_email(email):
+    if crud.get_user_by_email(email) or email == "":
         flash("Cannot create an account with provided email. Please try again.")
     else:
     # Else create a new account
@@ -71,6 +71,29 @@ def sign_in():
 
     return redirect("/")
 
+
+@app.route('/activity/stored')
+def get_stored_actvity():
+    """Query for all activity existing within the bored application's database"""
+
+    #TODO change objects to json
+    # Change to Dictionary first
+    dict_list = []
+    for u in crud.get_all_activities():
+        temp_dict = {
+            'activity_id': u.__dict__['activity_id'],
+            'key': u.__dict__['key'],
+            'activity': u.__dict__['activity'],
+            'a_type': u.__dict__['a_type'],
+            'participants': u.__dict__['participants'],
+            'price': u.__dict__['price'],
+            'link': u.__dict__['link'],
+            'accessibility': u.__dict__['accessibility']
+        }
+        
+        dict_list.append(temp_dict)
+
+    return jsonify(dict_list)
 
 @app.route('/activity/search')
 def find_filtered_activity():
@@ -136,6 +159,7 @@ def find_filtered_activity():
             db.session.commit()
         return render_template('activity.html', activity=activity)
     except:
+        # Using data.get instead of data['error'] to prevent error if response object does not include 'error' key
         if data.get('error'):
             flash("This activity doesn't exist :(")
         else:
