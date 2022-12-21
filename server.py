@@ -29,9 +29,37 @@ def homepage():
     return render_template('homepage.html')
 
 
-@app.route('/create-account', methods=["POST"])
-def create_account():
-    """Create an account."""
+@app.route('/registration')
+def show_registration_page():
+    """Navigate to registration page."""
+
+    return render_template('registration_sign_in.html', registration=True)
+
+    
+@app.route('/login')
+def show_login_page():
+    """Navigate to login page."""
+
+    return render_template('registration_sign_in.html', registration=False)
+
+
+@app.route('/logout')
+def logout():
+    """Log out."""
+
+    # Delete user information from session if currently logged in
+    if "user_id" in session:
+        del session["user_id"]
+    if "user_email" in session:
+        del session["user_email"]
+        flash(f"You have been logged out successfully!")
+
+    return render_template('logout.html')
+
+
+@app.route('/registration', methods=["POST"])
+def register_account():
+    """Register an account."""
 
     # Using jinja to get form inputs from request.form dictionary
     name = request.form.get("name")
@@ -42,6 +70,7 @@ def create_account():
     # Conditional to check if an account with the provided email already exists
     if crud.get_user_by_email(email) or email == "":
         flash("Cannot create an account with provided email. Please try again.")
+        return redirect('/registration')
     else:
     # Else create a new account
         user = crud.create_user(name=name, email=email, password=password, zip_code=zip_code)
@@ -49,12 +78,12 @@ def create_account():
         db.session.commit()
         flash("Account created! Please log in.")
 
-    return redirect('/')
+    return render_template('registration_sign_in.html', registration=False)
 
 
-@app.route('/sign-in', methods=["POST"])
+@app.route('/login', methods=["POST"])
 def sign_in():
-    """Sign in."""
+    """Login."""
 
     email = request.form.get("email")
     password = request.form.get("password")
@@ -76,8 +105,6 @@ def sign_in():
 def get_stored_actvity():
     """Query for all activity existing within the bored application's database"""
 
-    #TODO change objects to json
-    # Change to Dictionary first
     dict_list = []
     for u in crud.get_all_activities():
         temp_dict = {
@@ -94,6 +121,7 @@ def get_stored_actvity():
         dict_list.append(temp_dict)
 
     return jsonify(dict_list)
+    
 
 @app.route('/activity/search')
 def find_filtered_activity():
