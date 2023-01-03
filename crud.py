@@ -1,6 +1,7 @@
 """CRUD operations"""
 
 from model import db, User, History, Activity, connect_to_db
+from sqlalchemy import desc
 
 
 def create_user(name, email, password, zip_code):
@@ -28,38 +29,50 @@ def create_activity(key, activity, a_type, participants, price, link, accessibil
 
 
 def get_user_by_email(email):
-    """Return a user by email"""
+    """Return a user by email."""
 
     return User.query.filter(User.email == email).first()
 
 
 def get_user_history(user_id):
-    """Return a user's history"""
+    """Return a user's history descending order by date."""
+    
+    return History.query.filter(History.user_id == user_id).order_by(desc(History.last_clicked)).all()
 
+
+def get_user_history_asc(user_id):
+    """Return a user's history ascending order by date."""
+    
     return History.query.filter(History.user_id == user_id).all()
+
+
+def get_user_history_activity(activity_id):
+    """Return an activity using it's id."""
+
+    return Activity.query.filter(Activity.activity_id == activity_id).first()
 
 
 #TODO Incomplete need to use date time here
 def get_recent_activity():
-    """Return all user's recent activity"""
+    """Return all user's recent activity."""
 #TODO Need to change the filter logic for the date and use (present_time - 30 days)
     return History.query.filter(History.last_clicked > 5).all()
 
 
 def get_all_activities():
-    """Return all activities"""
+    """Return all activities."""
 
     return Activity.query.all()
 
 
 def get_activity_by_id(activity_id):
-    """Return a specific activity by id"""
+    """Return a specific activity by id."""
 
     return Activity.query.filter(Activity.activity_id == activity_id).first()
 
 
 def get_activity_by_key(key):
-    """Return a specific activity by key"""
+    """Return a specific activity by key."""
 
     return Activity.query.filter(Activity.key == key).first()
 

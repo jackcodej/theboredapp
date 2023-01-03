@@ -6,7 +6,7 @@ const LoginForm = () => {
         <div className="form-outline mb-4">
             <input type="text" id="login-email" name="email" className="form-control" />
             <label className="form-label">Email</label>
-            <input type="text" id="login-password" name="password" className="form-control" />
+            <input type="password" id="login-password" name="password" className="form-control" />
             <label className="form-label">Password</label>
             <div><input type="submit" value="Login"/></div>
         </div>

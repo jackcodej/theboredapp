@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
 
-{% block title %} - Details{% endblock %}
+{% block title %}{{ activity.activity }}{% endblock %}
 
 {% block body %}
-<ul>
-    <li>Activity Type - {{ activity.a_type }}</li>
-    <li>Activity - {{ activity.activity }}</li>
-    <li>Participant Numbers - {{ activity.participants }}</li>
-    <li>Price level - {{ activity.price }}</li>
-    <li>Link - {{ activity.link }}</li>
-    <li>Accessibility level - {{ activity.accessibility }}</li>
-</ul>
-
-<form action="/">
-    <input type="submit" value="Return to home">
-</form>
-
+<div class="card" style="width: 18rem; margin-left:auto; margin-right:auto; margin-top:50px">
+    <img class="card-img-top" src="../static/imgs/bored_cat.jpg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{ activity.activity }}</h5>
+      <p class="card-text"><small class="text-muted">{{ activity.a_type }}</small></p>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Participants: {{ activity.participants }}</li>
+        <li class="list-group-item">Price level: {{ activity.price }}</li>
+        <li class="list-group-item">Accessibility level: {{ activity.accessibility }}</li>
+        {% if activity.link %}
+        <li class="list-group-item">Link: {{ activity.link }}</li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
 {% endblock %}
