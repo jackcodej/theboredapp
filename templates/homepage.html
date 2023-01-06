@@ -6,46 +6,59 @@
 <h1>Welcome to the bored application!</h1>
 {% if "user_id" not in session %}
 {% endif %}
+  <div class="wrapper" style="display:flex; justify-content:space-between;">
 
-  <form action="/activity/search">
-    <p>key: <input type="number" name="key"></p>
-    <p>
-      <label>Accessibility Level-----------------------------------------------------------------</label></label>
-      <p>
-        <!-- Will need to add logic to not allow nonsense inputs for the range -->
-        Low:<input type="number" name="min_accessibility" max="100" min="0">
-        High:<input type="number" name="max_accessibility" max="100" min="0">
-      </p>
-    </p>
-    <p>
-      <label>Select an activity type</label>
-      <select>
-        <option value =""></option>
-        <option value="">Surprise me!</option>
-        <option value="diy">Do it yourself (diy)</option>
-        <option value="cooking">Cooking</option>
-        <option value="charity">Charity</option>
-        <option value="social">Social</option>
-        <option value="music">Music</option>
-        <option value="recreational">Recreational</option>
-        <option value="relaxation">Relaxation</option>
-        <option value="education">Education</option>
-        <option value="relaxing">Relaxing</option>
-        <option value="busywork">Busywork</option>
-      </select>
-    </p>
-    <p>Participants: <input type="number" name="participants" max="5" min="1"></p>
+    <div id="form_wrapper" style="border-style:ridge; border-color:black; border-width:5px;">
+      <form action="/activity/search">
+<!-- TODO: Need to add placeholders to these number inputs so they make more sense, currently nothing shows up -->
+
+        <label>Key</label>
+        <div class="row">
+          <div class="col"><input placerholder="key" type="number" class="form-control" name="key"></div>
+        </div>
+          <label for="accessibility_range">Accessibility Level</label>
+          <div class="row">
+            <div class="col"><input placerholder="Low" class="form-control" type="number" name="min_accessibility" max="100" min="0"></div>
+            <div class="col"><input placerholder="High" class="form-control" type="number" name="max_accessibility" max="100" min="0"></div>
+          </div>
+        <label>Select an activity type</label>
+        <div class="row">
+          <div class="col">
+            <select>
+              <option value=""></option>
+              <option value="">Surprise me!</option>
+              <option value="diy">Do it yourself (diy)</option>
+              <option value="cooking">Cooking</option>
+              <option value="charity">Charity</option>
+              <option value="social">Social</option>
+              <option value="music">Music</option>
+              <option value="recreational">Recreational</option>
+              <option value="relaxation">Relaxation</option>
+              <option value="education">Education</option>
+              <option value="relaxing">Relaxing</option>
+              <option value="busywork">Busywork</option>
+            </select>
+          </div>
+        </div>
+      <label>Participants</label>
+      <div class="row">
+        <div class="col"><input type="number" name="participants" max="5" min="1"></div>
+      </div>
+      <label>Price Range</label>
+          <div class="row">
+            <div class="col"><input placerholder="Low" type="number" class="form-control" name="min_price" max="100"></div>
+            <div class="col"><input placerholder="High" type="number" class="form-control" name="max_price" max="100"></div>
+          </div>
+      <div class="row">
+        <div class="col"><input type="submit" class="btn btn-primary" value="Get Activity"></div>
+      </div>
+    </form>
+  </div>
     
-    <p>
-      <label>Price Range-----------------------------------------------------------------</label>
-      <p>
-        <!-- Will need to add logic to not allow nonsense inputs for the range -->
-        Low:<input type="number" name="min_price" max="100"> High:<input type="number" name="max_price" max="100">
-      </p>
-    </p>
-
-    <input type="submit" value="Test filter get">
-  </form>
-  <button id="get_activities">See all user chosen activities</button>
-  <div id="user_activities"></div>
+    <div id="all_user_activities" style="border-style:inset; border-width: 3px; border-color: brown;">
+      <h5>Social Feed</h5>
+    <div id="user_activities"></div>
+    <button id="get_activities">Refresh</button>
+  </div>
+</div>
   {% endblock %}

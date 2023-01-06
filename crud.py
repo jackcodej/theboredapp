@@ -2,6 +2,8 @@
 
 from model import db, User, History, Activity, connect_to_db
 from sqlalchemy import desc
+import datetime
+
 
 
 def create_user(name, email, password, zip_code):
@@ -52,11 +54,15 @@ def get_user_history_activity(activity_id):
     return Activity.query.filter(Activity.activity_id == activity_id).first()
 
 
-#TODO Incomplete need to use date time here
+#TODO Incomplete need to test, unable at time of development due to internet limitations (unable to connect to postgresql on 'free wifi')
 def get_recent_activity():
     """Return all user's recent activity."""
-#TODO Need to change the filter logic for the date and use (present_time - 30 days)
-    return History.query.filter(History.last_clicked > 5).all()
+
+    # Calculate date for a week from today, to display recent user activity
+    today = datetime.date.today().strftime("%B %d, %Y")
+    a_week_ago = today - datetime.timedelta(days=7)
+
+    return History.query.filter(History.last_clicked > a_week_ago).all()
 
 
 def get_all_activities():

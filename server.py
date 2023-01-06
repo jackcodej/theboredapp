@@ -25,6 +25,8 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def homepage():
     """View homepage."""
+    # TODO: Uncomment line 29 and test
+    # get_recent_actvity()
 
     return render_template('homepage.html')
 
@@ -102,11 +104,11 @@ def sign_in():
 
 
 @app.route('/activity/stored')
-def get_stored_actvity():
-    """Query for all activity existing within the bored application's database"""
+def get_recent_actvity():
+    """Query for recent activity, past week"""
 
     dict_list = []
-    for u in crud.get_all_activities():
+    for u in crud.get_recent_activity():
         temp_dict = {
             'activity_id': u.__dict__['activity_id'],
             'key': u.__dict__['key'],
