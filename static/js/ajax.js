@@ -31,3 +31,6 @@ function getStoredActivities(){
 if (document.querySelector('#get_activities')){
     document.querySelector('#get_activities').addEventListener('click', getStoredActivities);
 }
+
+// TODO: getRandomActivities
+// TODO: getPopularActivities

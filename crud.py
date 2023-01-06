@@ -82,7 +82,29 @@ def get_activity_by_key(key):
 
     return Activity.query.filter(Activity.key == key).first()
 
-# Query to get activity based on parameters
+
+def get_popular_activities():
+    """Return a list of most popular activity ids."""
+    
+    popular_dict = {}
+
+    all_histories = History.query.all()
+
+    for log in all_histories:
+        popular_dict[log.activity_id] = popular_dict.get(log.activity_id, 0) + 1
+
+    return popular_dict
+
+
+# TODO: get suggested activities (get random activities), NOT SURE if this will work, need to test/revisit
+def get_random_activities():
+    """Return random activities"""
+
+    random_list = []
+    for _ in range(5):
+        random_list.append(Activity.query.order_by(func.random()).first())
+
+    return random_list
 
 
 if __name__ == "__main__":

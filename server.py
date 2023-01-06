@@ -25,8 +25,10 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def homepage():
     """View homepage."""
-    # TODO: Uncomment line 29 and test
-    # get_recent_actvity()
+    # TODO: Important consideration, how will I trigger the JS to run if I am just going to feed it data??? May need to research an onload functionality for this use case
+    # TODO: Uncomment line 29/30 and test 
+    # get_recent_activity()
+    # get_popular_activity
 
     return render_template('homepage.html')
 
@@ -103,27 +105,32 @@ def sign_in():
     return redirect("/")
 
 
+# TODO: NEED TO TEST HELPER FUNCTION
 @app.route('/activity/stored')
-def get_recent_actvity():
+def get_recent_activity():
     """Query for recent activity, past week"""
 
     dict_list = []
-    for u in crud.get_recent_activity():
-        temp_dict = {
-            'activity_id': u.__dict__['activity_id'],
-            'key': u.__dict__['key'],
-            'activity': u.__dict__['activity'],
-            'a_type': u.__dict__['a_type'],
-            'participants': u.__dict__['participants'],
-            'price': u.__dict__['price'],
-            'link': u.__dict__['link'],
-            'accessibility': u.__dict__['accessibility']
-        }
-        
-        dict_list.append(temp_dict)
+    for activity in crud.get_recent_activity():
+        dict_list.append(helper.map_activity_to_dict(activity))
 
     return jsonify(dict_list)
     
+
+# TODO: NEED TO TEST
+@app.route('/activity/popular')
+def get_popular_activity():
+    """Return most popular activities"""
+    
+    popular_activities = []
+    popular_dict = crud.get_popular_activities()
+
+    for activity_id in popular_dict:
+        # Invoke helper function to map activity instance to dictionary
+        popular_activities.append(helper.map_activity_to_dict(activity = crud.get_activity_by_id(activity_id)))
+
+    return jsonify(popular_activities)
+
 
 @app.route('/activity/search')
 def find_filtered_activity():
