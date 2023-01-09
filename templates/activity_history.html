@@ -12,7 +12,7 @@
       <h5 class="card-title">{{  activity_dict[log.activity_id] }}</h5>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">Activity Id: {{ log.activity_id }}</li>
-        <li class="list-group-item">Last clicked: {{ log.last_clicked }}</li>
+        <li class="list-group-item">Last clicked: {{ log.last_clicked.strftime('%Y-%m-%d') }}</li>
         <li class="list-group-item">User Id: {{ log.user_id }}</li>
         <li class="list-group-item">History Id: {{ log.history_id }}</li>
       </ul>

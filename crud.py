@@ -1,7 +1,7 @@
 """CRUD operations"""
 
 from model import db, User, History, Activity, connect_to_db
-from sqlalchemy import desc
+from sqlalchemy import desc, func
 import datetime
 
 
@@ -54,15 +54,12 @@ def get_user_history_activity(activity_id):
     return Activity.query.filter(Activity.activity_id == activity_id).first()
 
 
-#TODO Incomplete need to test, unable at time of development due to internet limitations (unable to connect to postgresql on 'free wifi')
 def get_recent_activity():
     """Return all user's recent activity."""
 
-    # Calculate date for a week from today, to display recent user activity
     today = datetime.date.today().strftime("%B %d, %Y")
-    a_week_ago = today - datetime.timedelta(days=7)
-
-    return History.query.filter(History.last_clicked > a_week_ago).all()
+    a_week_ago = datetime.datetime.strptime(today, "%B %d, %Y") - datetime.timedelta(days=7)
+    return History.query.filter(History.last_clicked > a_week_ago).order_by(desc(History.last_clicked)).all()
 
 
 def get_all_activities():
@@ -84,28 +81,20 @@ def get_activity_by_key(key):
 
 
 def get_popular_activities():
-    """Return a list of most popular activity ids."""
+    """Return a dictionary of most popular activity ids."""
     
     popular_dict = {}
 
-    all_histories = History.query.all()
-
-    for log in all_histories:
+    for log in History.query.all():
         popular_dict[log.activity_id] = popular_dict.get(log.activity_id, 0) + 1
 
     return popular_dict
 
 
-# TODO: get suggested activities (get random activities), NOT SURE if this will work, need to test/revisit
 def get_random_activities():
-    """Return random activities"""
+    """Return a list of random activities."""
 
-    random_list = []
-    for _ in range(5):
-        random_list.append(Activity.query.order_by(func.random()).first())
-
-    return random_list
-
+    return Activity.query.order_by(func.random()).first()
 
 if __name__ == "__main__":
     from server import app
