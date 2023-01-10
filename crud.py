@@ -96,6 +96,12 @@ def get_random_activities():
 
     return Activity.query.order_by(func.random()).first()
 
+
+def get_log_by_history_id(history_id):
+    """Get history log by id."""
+
+    return History.query.filter(History.history_id == history_id).first()
+
 if __name__ == "__main__":
     from server import app
 

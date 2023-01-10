@@ -17,12 +17,9 @@
         <li class="list-group-item">History Id: {{ log.history_id }}</li>
       </ul>
     </div>
+   <button type="button" class="btn btn-danger" value="Delete"><a href="/remove/history/{{log.history_id}}">Delete</a></button>
   </div>
 {% endfor %}
 </div>
-
-<form action="/">
-    <input type="submit" value="Return to home">
-</form>
 
 {% endblock %} 

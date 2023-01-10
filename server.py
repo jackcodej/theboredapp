@@ -137,7 +137,22 @@ def get_recent_activity():
     for history_activity_log in crud.get_recent_activity():
         dict_list.append(helper.map_activity_to_dict(crud.get_activity_by_id(history_activity_log.__dict__['activity_id'])))
     return jsonify(dict_list)
-    
+
+
+@app.route('/remove/history/<history_id>')
+def remove_by_history_id(history_id):
+    """Delete from user history."""
+
+    try:
+        del_log = crud.get_log_by_history_id(history_id)
+        db.session.delete(del_log)
+        db.session.commit()
+        flash(f"The activity was removed from your history")
+    except:
+        flash("An error has occurred, please try again")
+
+    return redirect('/')
+
 
 @app.route('/activity/search')
 def find_filtered_activity():
