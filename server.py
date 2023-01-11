@@ -165,15 +165,13 @@ def find_filtered_activity():
     # key = request.args.get('key', '') depricated
     a_type = request.args.get('a_type', '')
     participants = request.args.get('participants', '')
-    min_price = request.args.get('min_price', '')
-    max_price = request.args.get('max_price', '')
-    min_accessibility = request.args.get('min_accessibility', '')
-    max_accessibility = request.args.get('max_accessibility', '')
+    min_price = 0
+    max_price = request.args.get('max_price', 100)
+    min_accessibility = 0
+    max_accessibility = request.args.get('max_accessibility', 100)
 
     # Invoke helper functions to process values
-    min_price = helper.convert_arg_to_percent(min_price)
     max_price = helper.convert_arg_to_percent(max_price)
-    min_accessibility = helper.convert_arg_to_percent(min_accessibility)
     max_accessibility = helper.convert_arg_to_percent(max_accessibility)
 
     # Invoke helper functions to check min/max values

@@ -15,16 +15,20 @@
         <div class="row">
           <div class="col"><input placeholder="key" type="number" class="form-control" name="key"></div>
         </div> -->
-          <label for="accessibility_range">Accessibility Level (1-100)</label>
           <div class="row">
-            <div class="col"><input placeholder="Low" class="form-control" type="number" name="min_accessibility" max="100" min="0"></div>
-            <div class="col"><input placeholder="High" class="form-control" type="number" name="max_accessibility" max="100" min="0"></div>
+            <div class="col">
+              <div class="col">
+                <label for="accessibility_range" class="form-label">Max Accessibility = </label>
+                <output id="accessibility_max_value">100</output>
+              </div>
+              <input type="range" class="form-range" min="10" max="100" step="10" name="max_accessibility" value=100 oninput="accessibility_max_value.value = this.value">
+            </div>
           </div>
-        <label>Select an activity type</label>
+        <label class="form-label">Activity Type</label>
         <div class="row">
           <div class="col">
-            <select name="a_type">
-              <option value="">Select a category</option>
+            <select class="form-select"  aria-label="Activity type select" name="a_type">
+              <option selected value="">Select an activity type</option>
               <option value="">Surprise me!</option>
               <option value="diy">Do it yourself (diy)</option>
               <option value="cooking">Cooking</option>
@@ -39,14 +43,27 @@
             </select>
           </div>
         </div>
-      <label>Participants</label>
+      <label class="form-label">Participants</label>
       <div class="row">
-        <div class="col"><input type="number" name="participants" max="5" min="1"></div>
+        <div class="col">
+          <select class="form-select"  aria-label="Activity type select" name="participants">
+            <option selected value="">Select number of participants</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
       </div>
-      <label>Price Range (1-100)</label>
           <div class="row">
-            <div class="col"><input placeholder="Low" type="number" class="form-control" name="min_price" max="100"></div>
-            <div class="col"><input placeholder="High" type="number" class="form-control" name="max_price" max="100"></div>
+            <div class="col">
+              <div class="col">
+                <label for="price_range" class="form-label">Max Price = </label>
+                <output id="max_price_value">100</output>
+              </div>
+              <input type="range" class="form-range" min="10" max="100" step="10" value=100 name="max_price" oninput="max_price_value.value = this.value">
+            </div>
           </div>
       <div class="row">
         <div class="col"><input type="submit" class="btn btn-primary" value="Get Activity"></div>
