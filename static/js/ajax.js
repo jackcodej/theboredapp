@@ -13,9 +13,9 @@ function getStoredActivities(){
         for (const activity of activityData){
             targetActivityContainer.insertAdjacentHTML('beforeend', 
             `<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-            <div class="card-header">${activity.a_type}</div>
+            <div class="card-header">${activity.activity}</div>
             <div class="card-body">
-              <p class="card-text">${activity.activity}</p>
+            <p class="card-text">${activity.a_type}</p>
               <p class="card-text">Participants: ${activity.participants}</p>
               <p class="card-text">Price: ${activity.price}</p>
               <p class="card-text">Link: ${activity.link}</p>
@@ -41,9 +41,9 @@ function getPopularActivities(){
         for (const activity of activityData){
             targetActivityContainer.insertAdjacentHTML('beforeend', 
             `<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-            <div class="card-header">${activity.a_type}</div>
+            <div class="card-header">${activity.activity}</div>
             <div class="card-body">
-              <p class="card-text">${activity.activity}</p>
+            <p class="card-text">${activity.a_type}</p>
               <p class="card-text">Participants: ${activity.participants}</p>
               <p class="card-text">Price: ${activity.price}</p>
               <p class="card-text">Link: ${activity.link}</p>
@@ -71,9 +71,9 @@ function getRandomActivities(){
         for (const activity of activityData){
             targetActivityContainer.insertAdjacentHTML('beforeend', 
             `<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-            <div class="card-header">${activity.a_type}</div>
+            <div class="card-header">${activity.activity}</div>
             <div class="card-body">
-              <p class="card-text">${activity.activity}</p>
+            <p class="card-text">${activity.a_type}</p>
               <p class="card-text">Participants: ${activity.participants}</p>
               <p class="card-text">Price: ${activity.price}</p>
               <p class="card-text">Link: ${activity.link}</p>

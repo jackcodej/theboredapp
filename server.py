@@ -162,7 +162,7 @@ def find_filtered_activity():
 
     # Get all values from form **Not request.form because this is not a post request
     # Need to clarify the exact reason why we use request.args.get instead of request.form
-    key = request.args.get('key', '')
+    # key = request.args.get('key', '') depricated
     a_type = request.args.get('a_type', '')
     participants = request.args.get('participants', '')
     min_price = request.args.get('min_price', '')
@@ -181,7 +181,7 @@ def find_filtered_activity():
     min_accessibility, max_accessibility = helper.check_range_values(min_accessibility, max_accessibility)        
 
     payload = {
-        'key': key,
+        # 'key': key,
         'type': a_type,
         'participants': participants,
         'minprice': min_price,
@@ -232,12 +232,12 @@ def get_activity_by_user():
     """Get the activity history of browser's session user_id"""
 
     activity_dict = {}
-
     if "user_id" in session:
         user_history = crud.get_user_history(session["user_id"])
         for log in user_history:
-            activity = crud.get_user_history_activity(log.activity_id)
-            activity_dict[log.activity_id] = activity_dict.get(log.activity_id, activity.activity)
+            activity_info = []
+            activity_info.append(crud.get_user_history_activity(log.activity_id))
+            activity_dict[log.activity_id] = activity_dict.get(log.activity_id, activity_info)
     else:
         flash('Please login to your account or register to have access to this feature.')
 

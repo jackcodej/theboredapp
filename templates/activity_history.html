@@ -7,9 +7,9 @@
 <div class="container" style="display:flex; flex-wrap:wrap; align-content:flex-start;">
 {% for log in user_history %}
 <div class="card" style="width: 18rem; margin-left:auto; margin-right:auto; margin-top:50px; justify-content: space-evenly;">
-    <img class="card-img-top" src="../static/imgs/bored_cat.jpg" alt="Card image cap">
+    <img class="card-img-top text-center" style="height: 200px; width: 288px; object-fit: contain;" src="../static/imgs/{{activity_dict[log.activity_id][0].a_type}}.jpg" alt="Card image cap">
     <div class="card-body">
-      <h5 class="card-title">{{  activity_dict[log.activity_id] }}</h5>
+      <h5 class="card-title">{{  activity_dict[log.activity_id][0].activity }}</h5>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">Activity Id: {{ log.activity_id }}</li>
         <li class="list-group-item">Last clicked: {{ log.last_clicked.strftime('%Y-%m-%d') }}</li>

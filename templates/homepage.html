@@ -9,23 +9,22 @@
   <div class="wrapper" style="display:flex; justify-content:space-between;">
 
     <div id="form_wrapper" style="border-style:ridge; border-color:black; border-width:5px;">
-      <form action="/activity/search">
-<!-- TODO: Need to add placeholders to these number inputs so they make more sense, currently nothing shows up -->
-
-        <label>Key</label>
+      <form style="width:300px;"action="/activity/search">
+        <!-- Key is not user friendly depreciated -->
+        <!-- <label>Key</label>
         <div class="row">
-          <div class="col"><input placerholder="key" type="number" class="form-control" name="key"></div>
-        </div>
-          <label for="accessibility_range">Accessibility Level</label>
+          <div class="col"><input placeholder="key" type="number" class="form-control" name="key"></div>
+        </div> -->
+          <label for="accessibility_range">Accessibility Level (1-100)</label>
           <div class="row">
-            <div class="col"><input placerholder="Low" class="form-control" type="number" name="min_accessibility" max="100" min="0"></div>
-            <div class="col"><input placerholder="High" class="form-control" type="number" name="max_accessibility" max="100" min="0"></div>
+            <div class="col"><input placeholder="Low" class="form-control" type="number" name="min_accessibility" max="100" min="0"></div>
+            <div class="col"><input placeholder="High" class="form-control" type="number" name="max_accessibility" max="100" min="0"></div>
           </div>
         <label>Select an activity type</label>
         <div class="row">
           <div class="col">
-            <select>
-              <option value=""></option>
+            <select name="a_type">
+              <option value="">Select a category</option>
               <option value="">Surprise me!</option>
               <option value="diy">Do it yourself (diy)</option>
               <option value="cooking">Cooking</option>
@@ -44,31 +43,32 @@
       <div class="row">
         <div class="col"><input type="number" name="participants" max="5" min="1"></div>
       </div>
-      <label>Price Range</label>
+      <label>Price Range (1-100)</label>
           <div class="row">
-            <div class="col"><input placerholder="Low" type="number" class="form-control" name="min_price" max="100"></div>
-            <div class="col"><input placerholder="High" type="number" class="form-control" name="max_price" max="100"></div>
+            <div class="col"><input placeholder="Low" type="number" class="form-control" name="min_price" max="100"></div>
+            <div class="col"><input placeholder="High" type="number" class="form-control" name="max_price" max="100"></div>
           </div>
       <div class="row">
         <div class="col"><input type="submit" class="btn btn-primary" value="Get Activity"></div>
       </div>
     </form>
   </div>
-    
-    <div id="activity_suggestion" style="border-style:inset; border-width: 3px; border-color:purple;">
-      <h5>Activity Suggestions</h5>
-    <div id="suggested_activities">Placeholder</div>
-    <button id="get_suggested_activities">Refresh</button>
-  </div>
-
-    <div id="most_popular" style="border-style:inset; border-width: 3px; border-color: green;">
-      <h5>Top 5 most Popular Activities</h5>
-    <div id="popular_activities">Placeholder</div>
-  </div>
-  
-    <div id="all_user_activities" style="border-style:inset; border-width: 3px; border-color: brown;">
-      <h5>Recently chosen activities</h5>
-    <div id="user_activities">Placeholder</div>
-  </div>
+    <div id="ajax_activity_wrapper" style="display:flex; flex-direction:column">
+      <div id="activity_suggestion" style="border-style:inset; border-width: 3px; border-color:purple;">
+        <h5>Activity Suggestions</h5>
+        <div id="suggested_activities" style="display:flex;">Placeholder</div>
+        <button id="get_suggested_activities">Refresh</button>
+      </div>
+      
+      <div id="most_popular" style="border-style:inset; border-width: 3px; border-color: green;">
+        <h5>Top 5 most Popular Activities</h5>
+        <div id="popular_activities" style="display:flex;">Placeholder</div>
+      </div>
+      
+      <div id="all_user_activities" style="border-style:inset; border-width: 3px; border-color: brown;">
+        <h5>Recently chosen activities</h5>
+        <div id="user_activities" style="display:flex;">Placeholder</div>
+      </div>
+    </div>
 </div>
   {% endblock %}
