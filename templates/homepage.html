@@ -8,8 +8,9 @@
 {% endif %}
   <div class="wrapper" style="display:flex; justify-content:space-between;">
 
-    <div id="form_wrapper" style="border-style:ridge; border-color:black; border-width:5px;">
-      <form style="width:300px;"action="/activity/search">
+    <!-- Form for users to make 'filtered' queries to boredapi -->
+    <div id="form_wrapper" style="border-style:ridge; border-color:black; border-width:5px; min-width:325px; max-height:425px;">
+      <form style="width:300px; margin-left:auto; margin-right:auto; height:400px;"action="/activity/search">
         <!-- Key is not user friendly depreciated -->
         <!-- <label>Key</label>
         <div class="row">
@@ -70,21 +71,23 @@
       </div>
     </form>
   </div>
-    <div id="ajax_activity_wrapper" style="display:flex; flex-direction:column">
+
+  <!-- AJAX Internal Query Activities -->
+   <div id="ajax_activity_wrapper" style="display:flex; flex-direction:column;"> 
       <div id="activity_suggestion" style="border-style:inset; border-width: 3px; border-color:purple;">
         <h5>Activity Suggestions</h5>
-        <div id="suggested_activities" style="display:flex;">Placeholder</div>
+        <div id="suggested_activities" style="display:flex; margin:2rem;">Placeholder</div>
         <button id="get_suggested_activities">Refresh</button>
       </div>
       
       <div id="most_popular" style="border-style:inset; border-width: 3px; border-color: green;">
         <h5>Top 5 most Popular Activities</h5>
-        <div id="popular_activities" style="display:flex;">Placeholder</div>
+        <div id="popular_activities" style="display:flex;  margin:2rem;">Placeholder</div>
       </div>
       
       <div id="all_user_activities" style="border-style:inset; border-width: 3px; border-color: brown;">
-        <h5>Recently chosen activities</h5>
-        <div id="user_activities" style="display:flex;">Placeholder</div>
+        <h5>Activities chosen by other users</h5>
+        <div id="user_activities" style="display:flex;  margin:2rem;">Placeholder</div>
       </div>
     </div>
 </div>

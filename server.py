@@ -103,16 +103,38 @@ def sign_in():
 
 @app.route('/activity/random')
 def get_random_activity():
-    """Returns 3 random activities."""
+    """Returns 6 random activities."""
 
     random_activities = []
 
-    for _ in range(4):
+    for _ in range(6):
         random_activities.append(helper.map_activity_to_dict(crud.get_random_activities()))
 
     return jsonify(random_activities)
 
 
+@app.route('/activity/<activity_id>')
+def get_activity_by_id(activity_id):
+    """Get an activity by id"""
+    
+    activity = crud.get_activity_by_id(activity_id)
+    try:
+        # If user is signed in create a new record in history
+        if "user_id" in session:
+            new_history_log = crud.create_history_log(user_id=session["user_id"], 
+                                                    activity_id=activity_id, 
+                                                    last_clicked=date.today().strftime("%B %d, %Y")
+                                                    )
+            db.session.add(new_history_log)
+            db.session.commit()
+        return render_template('activity.html', activity=activity)
+    except:
+        flash("An error has occurred, please try again")
+
+    return render_template('activity.html', activity=activity)
+
+
+# TODO: Found a bug, doesn't seem like I am getting the most popular, maybe my logic is reversed
 @app.route('/activity/popular')
 def get_popular_activity():
     """Return most popular activities."""
@@ -151,7 +173,7 @@ def remove_by_history_id(history_id):
     except:
         flash("An error has occurred, please try again")
 
-    return redirect('/')
+    return get_activity_by_user()
 
 
 @app.route('/activity/search')
@@ -161,7 +183,6 @@ def find_filtered_activity():
     url = 'https://www.boredapi.com/api/activity/'
 
     # Get all values from form **Not request.form because this is not a post request
-    # Need to clarify the exact reason why we use request.args.get instead of request.form
     # key = request.args.get('key', '') depricated
     a_type = request.args.get('a_type', '')
     participants = request.args.get('participants', '')
@@ -210,7 +231,7 @@ def find_filtered_activity():
         if "user_id" in session:
             new_history_log = crud.create_history_log(user_id=session["user_id"], 
                                                     activity_id=crud.get_activity_by_key(data["key"]).activity_id, 
-                                                    last_clicked=date.today().strftime("%B %d, %Y") #not getting exact time when doing this for some reason
+                                                    last_clicked=date.today().strftime("%B %d, %Y")
                                                     )
             db.session.add(new_history_log)
             db.session.commit()

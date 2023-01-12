@@ -22,8 +22,6 @@ def check_range_values(min, max):
 
 def map_activity_to_dict(activity):
     """Maps activity attributes to a dictionary"""
-    print(activity)
-    print(activity.__dict__)
     temp_dict = {
         'activity_id': activity.__dict__['activity_id'],
         'activity': activity.__dict__['activity'],

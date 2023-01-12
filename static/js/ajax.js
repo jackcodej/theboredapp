@@ -1,6 +1,37 @@
 // Makes js more strict, less convoluted
 'use strict';
 
+function getRandomActivities(){
+    const targetActivityContainer = document.querySelector('#suggested_activities');
+
+    targetActivityContainer.textContent = '';
+    fetch('/activity/random')
+    .then((response) => response.json())
+    .then((activityData) =>{
+      console.log("pewpewactivityData", activityData)
+        for (const activity of activityData){
+            targetActivityContainer.insertAdjacentHTML('beforeend', 
+            `<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">${activity.activity}</div>
+            <div class="card-body">
+            <p class="card-text">${activity.a_type}</p>
+              <p class="card-text">Participants: ${activity.participants}</p>
+              <p class="card-text">Price: ${activity.price}</p>
+              <p class="card-text">Link: ${activity.link}</p>
+              <p class="card-text">Accessibility: ${activity.accessibility}</p>
+            </div>
+          </div>`
+            );
+        }
+    });
+}
+
+if (document.querySelector('#suggested_activities')){
+    window.addEventListener('load', getRandomActivities);
+}
+if (document.querySelector('#get_suggested_activities')){
+  document.querySelector('#get_suggested_activities').addEventListener('click', getRandomActivities);
+}
 // Internal Activity Query
 function getStoredActivities(){
     const targetActivityContainer = document.querySelector('#user_activities');
@@ -59,35 +90,3 @@ if (document.querySelector('#popular_activities')){
     window.addEventListener('load', getPopularActivities);
 }
 
-
-function getRandomActivities(){
-    const targetActivityContainer = document.querySelector('#suggested_activities');
-
-    targetActivityContainer.textContent = '';
-    fetch('/activity/random')
-    .then((response) => response.json())
-    .then((activityData) =>{
-      console.log("pewpewactivityData", activityData)
-        for (const activity of activityData){
-            targetActivityContainer.insertAdjacentHTML('beforeend', 
-            `<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-            <div class="card-header">${activity.activity}</div>
-            <div class="card-body">
-            <p class="card-text">${activity.a_type}</p>
-              <p class="card-text">Participants: ${activity.participants}</p>
-              <p class="card-text">Price: ${activity.price}</p>
-              <p class="card-text">Link: ${activity.link}</p>
-              <p class="card-text">Accessibility: ${activity.accessibility}</p>
-            </div>
-          </div>`
-            );
-        }
-    });
-}
-
-if (document.querySelector('#suggested_activities')){
-    window.addEventListener('load', getRandomActivities);
-}
-if (document.querySelector('#get_suggested_activities')){
-  document.querySelector('#get_suggested_activities').addEventListener('click', getRandomActivities);
-}

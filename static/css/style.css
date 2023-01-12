@@ -1,0 +1,15 @@
+/* Used to properly see containers */
+* {
+    outline: 1px solid red;
+    overflow-x: hidden;
+  }
+
+.card-img-wrapper{
+    height: 200px;
+    width: 288px; 
+    object-fit: contain;
+}
+
+.get-activity-button{
+    z-index: 5;
+}
