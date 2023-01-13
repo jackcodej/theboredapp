@@ -1,2 +1,5 @@
-[{"activity":"test1","key":"1","accessibility":1,"type":"test","participants":1,"price":0.1,"link":"","enabled":true},
-{"activity":"test2","key":"2","accessibility":0.25,"type":"education","participants":2,"price":0.1,"link":"","enabled":true}]
+[{"activity":"Learn Express.js","accessibility":0.25,"type":"education","participants":1,"price":0.1,"link":"https://expressjs.com/","key":"3943506","enabled":true},
+{"activity":"Learn to greet someone in a new language","accessibility":0.2,"type":"education","participants":1,"price":0.1,"link":"","key":"4704256","enabled":true},
+{"activity":"Learn how to play a new sport","accessibility":0.2,"type":"recreational","participants":1,"price":0.1,"link":"","key":"5808228","enabled":true},
+{"activity":"Text a friend you haven't talked to in a long time","accessibility":0.2,"type":"social","participants":2,"price":0.05,"link":"","key":"6081071","enabled":true},
+{"activity":"Learn a new programming language","accessibility":0.25,"type":"education","participants":1,"price":0.1,"link":"","key":"5881028","enabled":true}]

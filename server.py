@@ -134,7 +134,6 @@ def get_activity_by_id(activity_id):
     return render_template('activity.html', activity=activity)
 
 
-# TODO: Found a bug, doesn't seem like I am getting the most popular, maybe my logic is reversed
 @app.route('/activity/popular')
 def get_popular_activity():
     """Return most popular activities."""

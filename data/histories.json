@@ -1,6 +1,7 @@
 [
-    {"user_id": 1, "activity_id": 1, "last_clicked": "12/13/2022"},
-    {"user_id": 1, "activity_id": 2, "last_clicked": "12/13/2022"},
-    {"user_id": 1, "activity_id": 1, "last_clicked": "12/14/2022"},
-    {"user_id": 2, "activity_id": 2, "last_clicked": "12/13/2022"}
+    {"user_id": 1, "activity_id": 1, "last_clicked": "1/13/2023"},
+    {"user_id": 1, "activity_id": 2, "last_clicked": "1/13/2023"},
+    {"user_id": 1, "activity_id": 3, "last_clicked": "1/14/2023"},
+    {"user_id": 2, "activity_id": 4, "last_clicked": "1/13/2023"},
+    {"user_id": 2, "activity_id": 5, "last_clicked": "1/13/2023"}
 ]
