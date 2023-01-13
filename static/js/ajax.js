@@ -8,7 +8,6 @@ function getRandomActivities(){
     fetch('/activity/random')
     .then((response) => response.json())
     .then((activityData) =>{
-      console.log("pewpewactivityData", activityData)
         for (const activity of activityData){
             targetActivityContainer.insertAdjacentHTML('beforeend', 
             `<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
@@ -20,6 +19,7 @@ function getRandomActivities(){
               <p class="card-text">Link: ${activity.link}</p>
               <p class="card-text">Accessibility: ${activity.accessibility}</p>
             </div>
+            <button type="button" class="btn btn-info" value="goToActivity"><a href="/activity/${activity.activity_id}">Activity</a></button>
           </div>`
             );
         }
@@ -52,6 +52,7 @@ function getStoredActivities(){
               <p class="card-text">Link: ${activity.link}</p>
               <p class="card-text">Accessibility: ${activity.accessibility}</p>
             </div>
+            <button type="button" class="btn btn-info" value="goToActivity"><a href="/activity/${activity.activity_id}">Activity</a></button>
           </div>`
             );
         }
@@ -80,6 +81,7 @@ function getPopularActivities(){
               <p class="card-text">Link: ${activity.link}</p>
               <p class="card-text">Accessibility: ${activity.accessibility}</p>
             </div>
+            <button type="button" class="btn btn-info" value="goToActivity"><a href="/activity/${activity.activity_id}">Activity</a></button>
           </div>`
             );
         }

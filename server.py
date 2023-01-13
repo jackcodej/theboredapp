@@ -145,8 +145,13 @@ def get_popular_activity():
     # Sort the dictionaries
     sorted_popular_dict = sorted(popular_dict.items(), key=lambda x:x[1])
     # Append the most popular activity_id (top 5) to popular_activities
-    for x in range(-1,-6,-1):
-        popular_activities.append(helper.map_activity_to_dict(activity = crud.get_activity_by_id(sorted_popular_dict[-x][0])))
+    if len(sorted_popular_dict) > 5:
+        for x in range(-1,-6,-1):
+            popular_activities.append(helper.map_activity_to_dict(activity = crud.get_activity_by_id(sorted_popular_dict[-x][0])))
+    else:
+        # Print test data set if not enough activities
+        for x in range(len(sorted_popular_dict)):
+            popular_activities.append(helper.map_activity_to_dict(activity = crud.get_activity_by_id(sorted_popular_dict[-x][0])))
 
     return jsonify(popular_activities)
 
