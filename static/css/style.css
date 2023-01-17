@@ -2,6 +2,7 @@
 * {
     outline: 1px solid red;
     overflow-x: hidden;
+    font-family: 'Quicksand', sans-serif;
   }
 
 .card-img-wrapper{
@@ -12,4 +13,9 @@
 
 .get-activity-button{
     z-index: 5;
+}
+
+.reg-form-error{
+    color: red;
+    font-size: small;
 }

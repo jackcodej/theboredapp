@@ -1,6 +1,6 @@
 const RegistrationForm = () => {
 
-  // TODO: Add error msgs/tooltips to show users requirements and which are incomplete (after they start)
+  // TODO: Convert validation to onblur instead of useEffect for feedback to users
 
   // Create controlled components so I can validate information before allowing users to 'register'
   const [isValid, setIsValid] = React.useState(false);
@@ -9,6 +9,14 @@ const RegistrationForm = () => {
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [zipcode, setZipcode] = React.useState("");
+  // Error messages
+  const [nameError, setNameError] = React.useState("");
+  const [emailError, setEmailError] = React.useState("");
+  const [passwordError, setPasswordError] = React.useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = React.useState("");
+  const [zipcodeError, setZipcodeError] = React.useState("");
+  // Error message timeout
+  const [delayInSec] = React.useState(5);
 
   // Check if name is valid
   const nameValidation = () =>{
@@ -48,7 +56,46 @@ const RegistrationForm = () => {
 
   // useEffect will listen to changes in variables in the defined array and run this code when is sees changes
   React.useEffect(() =>{
-    emailValidation();
+    // Error handling for name
+    if (name !== "" && !nameValidation()){
+      setNameError("Name is not valid please only use alphabetic characters, spaces are allowed")
+    } else{
+      setNameError("");
+    }
+    if (email !== "" && !emailValidation()){
+      setTimeout(() => {
+        setEmailError("Email is not valid")
+      }, delayInSec * 1000);
+    } else{
+      setEmailError("");
+    }
+    if (password !== "" && !strongPassword()){
+      setTimeout(() => {
+        setPasswordError("Password is not long enough, minimum of 8 characters")
+      }, delayInSec * 1000);
+    } else{
+      setPasswordError("");
+    }
+    if (passwordError === "" && confirmPassword !== "" && !passwordsMatch()){
+      setTimeout(() => {
+        setConfirmPasswordError("Passwords do not match")
+      }, delayInSec * 1000);
+    } else{
+      setConfirmPasswordError("");
+    }
+    if (zipcode !== "" && !zipcodeValidation){
+      setTimeout(() => {
+        setZipcodeError("Zipcode is not a valid U.S. zipcode")
+      }, delayInSec * 1000);
+    } else{
+      setZipcodeError("");
+    }
+
+      setEmailError("");
+      setPasswordError("");
+      setConfirmPasswordError("");
+      setZipcodeError("");
+
     // Check if any field is empty or invalid
     if (name === "" || 
     email === "" || 
@@ -62,7 +109,6 @@ const RegistrationForm = () => {
     !zipcodeValidation()
     ){
       setIsValid(false);
-      // add individual ELIFS or just check each field with its own conditional for empty / valid using regex
     } else{
       setIsValid(true);
     }
@@ -71,44 +117,61 @@ const RegistrationForm = () => {
 
     return (
     <section>
-        <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Registration</h3>
+        <h3 className="pb-md-0">Registration</h3>
+        <p>Please fill out the form to register</p>
         <form action="/registration" method="POST" className="px-md-2" >
         <div className="form-outline mb-4">
-            <input type="text" 
+            <input type="text"
+            required
             id="reg-name" 
             name="name" 
             value={name} 
             onChange={(e) => setName(e.target.value)}
             className="form-control" />
-          <label className="form-label">Name</label>
+            <div className="row">
+              <div className="col-sm-2"><label className="form-label"><b>Name</b></label></div>
+              <div className="col-sm-10"><div className="reg-form-error" id="nameError">{nameError}</div></div>
+            </div>
             <input type="text" 
             id="reg-email" 
             name="email"
             value={email} 
             onChange={(e) => setEmail(e.target.value)}
             className="form-control" />
-          <label className="form-label">Email</label>
+            <div className="row">
+              <div className="col-sm-2"><label className="form-label"><b>Email</b></label></div>
+              <div className="col-sm-10"><div className="reg-form-error" id="emailError">{emailError}</div></div>
+            </div>
             <input type="password" 
             id="reg-password" 
             name="password"
             value={password} 
             onChange={(e) => setPassword(e.target.value)}
             className="form-control" />
-          <label className="form-label">Password</label>
+            <div className="row">
+              <div className="col-sm-2"><label className="form-label"><b>Password</b></label></div>
+              <div className="col-sm-10"><div className="reg-form-error" id="passwordError">{passwordError}</div></div>
+            </div>
             <input type="password" 
             id="reg-password-confirm" 
             name="password-confirm" 
             value={confirmPassword} 
             onChange={(e) => setConfirmPassword(e.target.value)}
             className="form-control" />
-          <label className="form-label">Confirm Password</label>
+           <div className="row">
+              <div className="col-sm-4"><label className="form-label"><b>Confirm Password</b></label></div>
+              <div className="col-sm-8"><div className="reg-form-error" id="confirmPasswordError">{confirmPasswordError}</div></div>
+            </div>
             <input type="text" 
             id="reg-zipcode" 
             name="zipcode" 
             value={zipcode} 
             onChange={(e) => setZipcode(e.target.value)}
             className="form-control" />
-          <label className="form-label">Zipcode</label>
+            <div className="row">
+              <div className="col-sm-2"><label className="form-label"><b>Zipcode</b></label></div>
+              <div className="col-sm-10"><div className="reg-form-error" id="zipcodeError">{zipcodeError}</div></div>
+            </div>
             <div><input className="btn btn-primary" type="submit" value="Register" disabled={!isValid}/></div>
         </div>
         </form>
