@@ -20,7 +20,7 @@
             <div class="col">
               <div class="col">
                 <label for="accessibility_range" class="form-label">Max Accessibility = </label>
-                <output id="accessibility_max_value">100</output>
+                <output id="accessibility_max_value" class="form-label">100</output>
               </div>
               <input type="range" class="form-range" min="10" max="100" step="10" name="max_accessibility" value=100 oninput="accessibility_max_value.value = this.value">
             </div>
@@ -61,7 +61,7 @@
             <div class="col">
               <div class="col">
                 <label for="price_range" class="form-label">Max Price = </label>
-                <output id="max_price_value">100</output>
+                <output id="max_price_value" class="form-label">100</output>
               </div>
               <input type="range" class="form-range" min="10" max="100" step="10" value=100 name="max_price" oninput="max_price_value.value = this.value">
             </div>
@@ -74,21 +74,24 @@
 
   <!-- AJAX Internal Query Activities -->
    <div id="ajax_activity_wrapper" style="display:flex; flex-direction:column;"> 
+
       <div id="activity_suggestion" style="border-style:inset; border-width: 3px; border-color:purple;">
         <h5>Activity Suggestions</h5>
-        <div id="suggested_activities" style="display:flex; margin:2rem;">Placeholder</div>
+        <div id="suggested_activities" style="display:flex; flex-wrap:wrap; align-content:flex-start; margin:2rem; justify-content: space-evenly;">Placeholder</div>
         <button id="get_suggested_activities">Refresh</button>
       </div>
       
       <div id="most_popular" style="border-style:inset; border-width: 3px; border-color: green;">
         <h5>Top 5 most Popular Activities</h5>
-        <div id="popular_activities" style="display:flex;  margin:2rem;">Placeholder</div>
+        <div id="popular_activities" style="display:flex; flex-wrap:wrap; align-content:flex-start;  margin:2rem; justify-content: space-evenly;">Placeholder</div>
       </div>
       
-      <div id="all_user_activities" style="border-style:inset; border-width: 3px; border-color: brown;">
+      <div id="all_user_activities" style="border-style:inset; border-width: 3px; border-color: brown; ">
         <h5>Activities chosen by other users</h5>
-        <div id="user_activities" style="display:flex;  margin:2rem;">Placeholder</div>
+        <div id="user_activities" style="display:flex; flex-wrap:wrap; align-content:flex-start;  margin:2rem; justify-content:space-evenly;">Placeholder</div>
       </div>
+
     </div>
+    
 </div>
   {% endblock %}

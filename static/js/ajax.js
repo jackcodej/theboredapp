@@ -10,7 +10,7 @@ function getRandomActivities(){
     .then((activityData) =>{
         for (const activity of activityData){
             targetActivityContainer.insertAdjacentHTML('beforeend', 
-            `<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            `<div class="card text-white bg-dark mb-1" style="max-width: 18rem;">
             <div class="card-header">${activity.activity}</div>
             <div class="card-body">
             <p class="card-text">${activity.a_type}</p>
@@ -43,7 +43,7 @@ function getStoredActivities(){
     .then((activityData) =>{
         for (const activity of activityData){
             targetActivityContainer.insertAdjacentHTML('beforeend', 
-            `<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            `<div class="card text-white bg-dark mb-1" style="max-width: 18rem;">
             <div class="card-header">${activity.activity}</div>
             <div class="card-body">
             <p class="card-text">${activity.a_type}</p>
@@ -72,7 +72,7 @@ function getPopularActivities(){
     .then((activityData) =>{
         for (const activity of activityData){
             targetActivityContainer.insertAdjacentHTML('beforeend', 
-            `<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            `<div class="card text-white bg-dark mb-1" style="max-width: 18rem;">
             <div class="card-header">${activity.activity}</div>
             <div class="card-body">
             <p class="card-text">${activity.a_type}</p>

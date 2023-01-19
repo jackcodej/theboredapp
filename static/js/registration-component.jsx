@@ -57,11 +57,13 @@ const RegistrationForm = () => {
   // useEffect will listen to changes in variables in the defined array and run this code when is sees changes
   React.useEffect(() =>{
     // Error handling for name
+    // TODO: maybe reversing the order of error handling to be in the else will make it behave properly
     if (name !== "" && !nameValidation()){
       setNameError("Name is not valid please only use alphabetic characters, spaces are allowed")
     } else{
       setNameError("");
     }
+
     if (email !== "" && !emailValidation()){
       setTimeout(() => {
         setEmailError("Email is not valid")
@@ -69,6 +71,7 @@ const RegistrationForm = () => {
     } else{
       setEmailError("");
     }
+
     if (password !== "" && !strongPassword()){
       setTimeout(() => {
         setPasswordError("Password is not long enough, minimum of 8 characters")
@@ -76,14 +79,16 @@ const RegistrationForm = () => {
     } else{
       setPasswordError("");
     }
-    if (passwordError === "" && confirmPassword !== "" && !passwordsMatch()){
+
+    if (passwordError && confirmPassword !== "" && !passwordsMatch()){
       setTimeout(() => {
         setConfirmPasswordError("Passwords do not match")
       }, delayInSec * 1000);
     } else{
       setConfirmPasswordError("");
     }
-    if (zipcode !== "" && !zipcodeValidation){
+
+    if (zipcode !== "" && !zipcodeValidation()){
       setTimeout(() => {
         setZipcodeError("Zipcode is not a valid U.S. zipcode")
       }, delayInSec * 1000);
@@ -129,7 +134,7 @@ const RegistrationForm = () => {
             onChange={(e) => setName(e.target.value)}
             className="form-control" />
             <div className="row">
-              <div className="col-sm-2"><label className="form-label"><b>Name</b></label></div>
+              <div className="col-sm-2"><label className="form-label">Name</label></div>
               <div className="col-sm-10"><div className="reg-form-error" id="nameError">{nameError}</div></div>
             </div>
             <input type="text" 
@@ -139,7 +144,7 @@ const RegistrationForm = () => {
             onChange={(e) => setEmail(e.target.value)}
             className="form-control" />
             <div className="row">
-              <div className="col-sm-2"><label className="form-label"><b>Email</b></label></div>
+              <div className="col-sm-2"><label className="form-label">Email</label></div>
               <div className="col-sm-10"><div className="reg-form-error" id="emailError">{emailError}</div></div>
             </div>
             <input type="password" 
@@ -149,7 +154,7 @@ const RegistrationForm = () => {
             onChange={(e) => setPassword(e.target.value)}
             className="form-control" />
             <div className="row">
-              <div className="col-sm-2"><label className="form-label"><b>Password</b></label></div>
+              <div className="col-sm-2"><label className="form-label">Password</label></div>
               <div className="col-sm-10"><div className="reg-form-error" id="passwordError">{passwordError}</div></div>
             </div>
             <input type="password" 
@@ -159,7 +164,7 @@ const RegistrationForm = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
             className="form-control" />
            <div className="row">
-              <div className="col-sm-4"><label className="form-label"><b>Confirm Password</b></label></div>
+              <div className="col-sm-4"><label className="form-label">Confirm Password</label></div>
               <div className="col-sm-8"><div className="reg-form-error" id="confirmPasswordError">{confirmPasswordError}</div></div>
             </div>
             <input type="text" 
@@ -169,7 +174,7 @@ const RegistrationForm = () => {
             onChange={(e) => setZipcode(e.target.value)}
             className="form-control" />
             <div className="row">
-              <div className="col-sm-2"><label className="form-label"><b>Zipcode</b></label></div>
+              <div className="col-sm-2"><label className="form-label">Zipcode</label></div>
               <div className="col-sm-10"><div className="reg-form-error" id="zipcodeError">{zipcodeError}</div></div>
             </div>
             <div><input className="btn btn-primary" type="submit" value="Register" disabled={!isValid}/></div>
