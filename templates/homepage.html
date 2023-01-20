@@ -3,14 +3,14 @@
 
 {% block body %}
 
-<h1>Welcome to the bored application!</h1>
+<h1 class="text-center pt-5 pb-5">Welcome to the bored application!</h1>
 {% if "user_id" not in session %}
 {% endif %}
-  <div class="wrapper" style="display:flex; justify-content:space-between;">
 
     <!-- Form for users to make 'filtered' queries to boredapi -->
-    <div id="form_wrapper" style="border-style:ridge; border-color:black; border-width:5px; min-width:325px; max-height:425px;">
-      <form style="width:300px; margin-left:auto; margin-right:auto; height:400px;"action="/activity/search">
+    <div id="form_wrapper" style="min-width:50%; max-height:50%;">
+      <h5 class="text-center pt-3">Fill out this form to get an activity catered to you!</h5>
+      <form style="width:40%; margin-left:auto; margin-right:auto; height:400px;"action="/activity/search">
         <!-- Key is not user friendly depreciated -->
         <!-- <label>Key</label>
         <div class="row">
@@ -73,25 +73,60 @@
   </div>
 
   <!-- AJAX Internal Query Activities -->
-   <div id="ajax_activity_wrapper" style="display:flex; flex-direction:column;"> 
+   <div id="ajax_activity_wrapper" style="display:flex;"> 
 
-      <div id="activity_suggestion" style="border-style:inset; border-width: 3px; border-color:purple;">
-        <h5>Activity Suggestions</h5>
-        <div id="suggested_activities" style="display:flex; flex-wrap:wrap; align-content:flex-start; margin:2rem; justify-content: space-evenly;">Placeholder</div>
-        <button id="get_suggested_activities">Refresh</button>
+    <!-- Carousel for suggested activities-->
+    <div id="activity_suggestion" class="align-items-center" style="width:40%;">
+      <h5 class="text-center">Activities you might like</h5>
+      <div id="carouselSuggestedControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner" id="suggested_activities" style="width:inherit;">
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselSuggestedControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselSuggestedControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
-      
-      <div id="most_popular" style="border-style:inset; border-width: 3px; border-color: green;">
-        <h5>Top 5 most Popular Activities</h5>
-        <div id="popular_activities" style="display:flex; flex-wrap:wrap; align-content:flex-start;  margin:2rem; justify-content: space-evenly;">Placeholder</div>
+      <button id="get_suggested_activities">Refresh</button>
+    </div>
+
+    <!-- Carousel for popular activities-->
+    <div id="most_popular" class="align-items-center" style="width:40%;">
+      <h5 class="text-center">Most popular activities</h5>
+      <div id="carouselPopularControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner" id="popular_activities" style="width:inherit;">
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselPopularControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselPopularControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
-      
-      <div id="all_user_activities" style="border-style:inset; border-width: 3px; border-color: brown; ">
-        <h5>Activities chosen by other users</h5>
-        <div id="user_activities" style="display:flex; flex-wrap:wrap; align-content:flex-start;  margin:2rem; justify-content:space-evenly;">Placeholder</div>
+    </div>
+
+    <!-- Carousel for popular activities-->
+    <div id="all_user_activities" class="align-items-center" style="width:40%">
+      <h5 class="text-center">Activities chosen by other users</h5>
+      <div id="carouselSocialControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner" id="user_activities" style="width:inherit;">
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselSocialControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselSocialControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
+    </div>
 
     </div>
     
-</div>
   {% endblock %}

@@ -18,6 +18,7 @@ const LoginForm = () => {
     return (
     <section>
         <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Log in</h3>
+        <p>Please fill out the form to login</p>
         <form action="/login" method="POST" className="px-md-2" >
         <div className="form-outline mb-4">
             <input type="text" 
