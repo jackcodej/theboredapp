@@ -20,6 +20,18 @@ app.app_context().push()
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
+# Store alternate text
+alt_text_dict = {
+'busywork': 'A variety of yarn organized by color in a grid of wooden cupboards',
+'charity': 'Hands from 5 people on a wooden table, alternating sides',
+'cooking': 'Aerial view of a cooking table with a variety of ingredients and a large wood cutting board',
+'diy': 'A wooden wall with several mounted tools',
+'education': 'A wall of books that curve inwards',
+'music': 'A home recording studio featuring several instruments',
+'recreational': 'A group of people walking on a hiking trail next to tall trees',
+'relaxation': 'A woman relaxing on a hammock during sunset next to a pond',
+'social': 'A group pf people socializing over drinks'
+}
 
 # Flask decorator to denote the home page, and run the homepage function
 @app.route('/')
@@ -127,11 +139,11 @@ def get_activity_by_id(activity_id):
                                                     )
             db.session.add(new_history_log)
             db.session.commit()
-        return render_template('activity.html', activity=activity)
+        return render_template('activity.html', activity=activity, alt_text_dict=alt_text_dict)
     except:
         flash("An error has occurred, please try again")
 
-    return render_template('activity.html', activity=activity)
+    return render_template('activity.html', activity=activity, alt_text_dict=alt_text_dict)
 
 
 @app.route('/activity/popular')
@@ -239,7 +251,7 @@ def find_filtered_activity():
                                                     )
             db.session.add(new_history_log)
             db.session.commit()
-        return render_template('activity.html', activity=activity)
+        return render_template('activity.html', activity=activity, alt_text_dict=alt_text_dict)
     except:
         # Using data.get instead of data['error'] to prevent error if response object does not include 'error' key
         if data.get('error'):
@@ -264,7 +276,7 @@ def get_activity_by_user():
     else:
         flash('Please login to your account or register to have access to this feature.')
 
-    return render_template('activity_history.html', user_history=user_history, activity_dict=activity_dict)
+    return render_template('activity_history.html', user_history=user_history, activity_dict=activity_dict, alt_text_dict=alt_text_dict)
 
 
 # Python3, only run the lines if server.py is ran directly
