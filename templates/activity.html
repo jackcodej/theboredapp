@@ -13,7 +13,7 @@
         <li class="list-group-item">Price level: {{ activity.price }}</li>
         <li class="list-group-item">Accessibility level: {{ activity.accessibility }}</li>
         {% if activity.link %}
-        <li class="list-group-item">Link: {{ activity.link }}</li>
+        <li class="list-group-item">Link: <a href="{{ activity.link }}">Get started here</a></li>
         {% endif %}
       </ul>
     </div>

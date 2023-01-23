@@ -3,21 +3,21 @@
 {% block title %} - User History{% endblock %}
 
 {% block body %}
-<h3 style="position:center;">Most recent to oldest</h3>
+<h3 class="text-center mt-5" style="position:center;">Most recent to oldest</h3>
 <div class="container" style="display:flex; flex-wrap:wrap; align-content:flex-start;">
 {% for log in user_history %}
-<div class="card" style="width: 18rem; margin-left:auto; margin-right:auto; margin-top:50px; justify-content: space-evenly;">
+<div class="card mt-5" style="width: 18rem; margin-left:auto; margin-right:auto; justify-content: space-evenly;">
     <img class="card-img-top text-center card-img-wrapper" src="../../static/imgs/{{activity_dict[log.activity_id][0].a_type}}.jpg" alt="{{ alt_text_dict[activity_dict[log.activity_id][0].a_type] }}">
     <div class="card-body">
       <h5 class="card-title">{{  activity_dict[log.activity_id][0].activity }}</h5>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">Activity Id: {{ log.activity_id }}</li>
         <li class="list-group-item">Last clicked: {{ log.last_clicked.strftime('%Y-%m-%d') }}</li>
-        <li class="list-group-item">User Id: {{ log.user_id }}</li>
-        <li class="list-group-item">History Id: {{ log.history_id }}</li>
       </ul>
     </div>
-   <button type="button" class="btn btn-danger" value="Delete"><a href="/remove/history/{{log.history_id}}">Delete</a></button>
+    <div class="row">
+      <div class="col"><button type="button" class="btn btn-info btn-history" value="goToActivity"><a href="/activity/{{log.activity_id}}">Read more</a></button></div>
+      <div class="col"><button type="button" class="btn btn-danger btn-history" style="margin-right:0" value="Delete"><a href="/remove/history/{{log.history_id}}">Delete</a></button></div>
+    </div>
   </div>
 {% endfor %}
 </div>

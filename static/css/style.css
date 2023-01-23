@@ -1,6 +1,4 @@
-/* Used to properly see containers */
 * {
-    /* outline: 1px solid red; */
     overflow-x: hidden;
     font-family: 'Quicksand', sans-serif;
     margin: 0;
@@ -22,11 +20,11 @@
     font-size: small;
 }
 
-/* Carousel styles */
-
-.carousel-inner{
-    padding: 1em;
+#get_suggested_activities {
+    cursor: pointer;
+    color: blue;
 }
+
 .card{
     box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
     border: none;
@@ -41,4 +39,23 @@
     border-radius: 50%;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.carousel-item{
+    width: 18rem; 
+    margin-left:auto; 
+    margin-right:auto; 
+    justify-content: space-evenly;
+}
+
+.card-button{
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2%;
+}
+
+.btn-history{
+    margin-bottom: 5%;
+    margin-left: 16%;
 }

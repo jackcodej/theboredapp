@@ -73,13 +73,15 @@
   </div>
 
   <!-- AJAX Internal Query Activities -->
-   <div id="ajax_activity_wrapper" style="display:flex;"> 
+   <div id="ajax_activity_wrapper" class="d-flex justify-content-around" style="width:100%;"> 
 
     <!-- Carousel for suggested activities-->
     <div id="activity_suggestion" class="align-items-center" style="width:40%;">
-      <h5 class="text-center">Activities you might like</h5>
+      <div class="row">
+        <div class="col"><h5 class="text-center">Activities you might like <span id="get_suggested_activities" class=reload>&#x21bb;</span></h5></div>
+      </div>
       <div id="carouselSuggestedControls" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner" id="suggested_activities" style="width:inherit;">
+        <div class="carousel-inner d-flex justify-content-center" id="suggested_activities" style="width:inherit;">
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselSuggestedControls" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -90,14 +92,13 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-      <button id="get_suggested_activities">Refresh</button>
     </div>
 
     <!-- Carousel for popular activities-->
     <div id="most_popular" class="align-items-center" style="width:40%;">
       <h5 class="text-center">Most popular activities</h5>
       <div id="carouselPopularControls" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner" id="popular_activities" style="width:inherit;">
+        <div class="carousel-inner d-flex justify-content-center" id="popular_activities" style="width:inherit;">
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselPopularControls" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -114,7 +115,7 @@
     <div id="all_user_activities" class="align-items-center" style="width:40%">
       <h5 class="text-center">Activities chosen by other users</h5>
       <div id="carouselSocialControls" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner" id="user_activities" style="width:inherit;">
+        <div class="carousel-inner d-flex justify-content-center" id="user_activities" style="width:inherit;">
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselSocialControls" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>

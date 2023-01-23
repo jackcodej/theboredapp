@@ -21,7 +21,7 @@ function getRandomActivities(){
             <p class="card-text">Link: ${activity.link}</p>
             <p class="card-text">Accessibility: ${activity.accessibility}</p>
           </div>
-          <button type="button" class="btn btn-info" value="goToActivity"><a href="/activity/${activity.activity_id}">Activity</a></button>
+          <button type="button" class="btn btn-info card-button" value="goTobtn-light"><a href="/activity/${activity.activity_id}">Read more</a></button>
           </div></div>`
           );
           first = false;
@@ -36,7 +36,7 @@ function getRandomActivities(){
           <p class="card-text">Link: ${activity.link}</p>
           <p class="card-text">Accessibility: ${activity.accessibility}</p>
           </div>
-          <button type="button" class="btn btn-info" value="goToActivity"><a href="/activity/${activity.activity_id}">Activity</a></button>
+          <button type="button" class="btn btn-info card-button" value="goToActivity"><a href="/activity/${activity.activity_id}">Read more</a></button>
           </div></div>`
           );
         }
@@ -72,7 +72,7 @@ function getPopularActivities(){
               <p class="card-text">Link: ${activity.link}</p>
               <p class="card-text">Accessibility: ${activity.accessibility}</p>
             </div>
-            <button type="button" class="btn btn-info" value="goToActivity"><a href="/activity/${activity.activity_id}">Activity</a></button>
+            <button type="button" class="btn btn-info card-button" value="goToActivity"><a href="/activity/${activity.activity_id}">Read more</a></button>
           </div></div>`
             );
             first = false;
@@ -87,7 +87,7 @@ function getPopularActivities(){
               <p class="card-text">Link: ${activity.link}</p>
               <p class="card-text">Accessibility: ${activity.accessibility}</p>
             </div>
-            <button type="button" class="btn btn-info" value="goToActivity"><a href="/activity/${activity.activity_id}">Activity</a></button>
+            <button type="button" class="btn btn-info card-button" value="goToActivity"><a href="/activity/${activity.activity_id}">Read more</a></button>
           </div></div>`
             );
           }
@@ -121,7 +121,7 @@ function getStoredActivities(){
             <p class="card-text">Link: ${activity.link}</p>
             <p class="card-text">Accessibility: ${activity.accessibility}</p>
           </div>
-          <button type="button" class="btn btn-info" value="goToActivity"><a href="/activity/${activity.activity_id}">Activity</a></button>
+          <button type="button" class="btn btn-info card-button" value="goToActivity"><a href="/activity/${activity.activity_id}">Read more</a></button>
         </div></div>`
           );
           s_first = false;
@@ -136,7 +136,7 @@ function getStoredActivities(){
             <p class="card-text">Link: ${activity.link}</p>
             <p class="card-text">Accessibility: ${activity.accessibility}</p>
           </div>
-          <button type="button" class="btn btn-info" value="goToActivity"><a href="/activity/${activity.activity_id}">Activity</a></button>
+          <button type="button" class="btn btn-info card-button" value="goToActivity"><a href="/activity/${activity.activity_id}">Read more</a></button>
         </div></div>`
           );
         }
