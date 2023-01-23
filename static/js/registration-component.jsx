@@ -57,32 +57,30 @@ const RegistrationForm = () => {
   // useEffect will listen to changes in variables in the defined array and run this code when is sees changes
   React.useEffect(() =>{
     // Error handling for name
-    // TODO: maybe reversing the order of error handling to be in the else will make it behave properly
     if (name !== "" && !nameValidation()){
-      setNameError("Name is not valid please only use alphabetic characters, spaces are allowed")
+      setNameError("Name is not valid please only use alphabetic characters, spaces are allowed");
     } else{
       setNameError("");
     }
 
     if (email !== "" && !emailValidation()){
       setTimeout(() => {
-        setEmailError("Email is not valid")
+        setEmailError("Email is not valid");
       }, delayInSec * 1000);
     } else{
       setEmailError("");
     }
-
     if (password !== "" && !strongPassword()){
       setTimeout(() => {
-        setPasswordError("Password is not long enough, minimum of 8 characters")
+        setPasswordError("Password is not long enough, minimum of 8 characters, no spaces");
       }, delayInSec * 1000);
     } else{
       setPasswordError("");
     }
 
-    if (passwordError && confirmPassword !== "" && !passwordsMatch()){
+    if (passwordError === "" && confirmPassword !== "" && !passwordsMatch()){
       setTimeout(() => {
-        setConfirmPasswordError("Passwords do not match")
+        setConfirmPasswordError("Passwords do not match");
       }, delayInSec * 1000);
     } else{
       setConfirmPasswordError("");
@@ -90,7 +88,7 @@ const RegistrationForm = () => {
 
     if (zipcode !== "" && !zipcodeValidation()){
       setTimeout(() => {
-        setZipcodeError("Zipcode is not a valid U.S. zipcode")
+        setZipcodeError("Zipcode is not a valid U.S. zipcode");
       }, delayInSec * 1000);
     } else{
       setZipcodeError("");
@@ -145,7 +143,7 @@ const RegistrationForm = () => {
             className="form-control" />
             <div className="row">
               <div className="col-sm-2"><label className="form-label">Email</label></div>
-              <div className="col-sm-10"><div className="reg-form-error" id="emailError">{emailError}</div></div>
+             {!emailValidation() && (<div className="col-sm-10"><div className="reg-form-error" id="emailError">{emailError}</div></div>)}
             </div>
             <input type="password" 
             id="reg-password" 
@@ -155,7 +153,7 @@ const RegistrationForm = () => {
             className="form-control" />
             <div className="row">
               <div className="col-sm-2"><label className="form-label">Password</label></div>
-              <div className="col-sm-10"><div className="reg-form-error" id="passwordError">{passwordError}</div></div>
+              {!strongPassword() && (<div className="col-sm-10"><div className="reg-form-error" id="passwordError">{passwordError}</div></div>)}
             </div>
             <input type="password" 
             id="reg-password-confirm" 
@@ -165,7 +163,7 @@ const RegistrationForm = () => {
             className="form-control" />
            <div className="row">
               <div className="col-sm-4"><label className="form-label">Confirm Password</label></div>
-              <div className="col-sm-8"><div className="reg-form-error" id="confirmPasswordError">{confirmPasswordError}</div></div>
+              {!passwordsMatch() && (<div className="col-sm-8"><div className="reg-form-error" id="confirmPasswordError">{confirmPasswordError}</div></div>)}
             </div>
             <input type="text" 
             id="reg-zipcode" 
@@ -175,7 +173,7 @@ const RegistrationForm = () => {
             className="form-control" />
             <div className="row">
               <div className="col-sm-2"><label className="form-label">Zipcode</label></div>
-              <div className="col-sm-10"><div className="reg-form-error" id="zipcodeError">{zipcodeError}</div></div>
+              {!zipcodeValidation() && (<div className="col-sm-10"><div className="reg-form-error" id="zipcodeError">{zipcodeError}</div></div>)}
             </div>
             <div><input className="btn btn-primary" type="submit" value="Register" disabled={!isValid}/></div>
         </div>
