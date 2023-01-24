@@ -48,6 +48,11 @@
     justify-content: space-evenly;
 }
 
+.active{
+    width: 18rem;
+    height: 24rem;
+}
+
 .card-button{
     width: 40%;
     margin-left: auto;
