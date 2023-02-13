@@ -1,5 +1,6 @@
 """CRUD operations"""
 
+from operator import and_
 from model import db, User, History, Activity, connect_to_db
 from sqlalchemy import desc, func
 import datetime
@@ -101,6 +102,15 @@ def get_log_by_history_id(history_id):
     """Get history log by id."""
 
     return History.query.filter(History.history_id == history_id).first()
+    
+
+    # TODO: Need to use payload values to get activities that match
+def get_filtered_activities(payload):
+    """Get activity using payload to filter."""
+    # Currently works for min/max values if they always exist but what about optional ones such as activity_type and participant number
+    # May need a different function to handle a_type / participant number or figure out how to make this query dynamic and handle it
+    return Activity.query.filter(Activity.accessibility <= payload['maxaccessibility'], Activity.accessibility >= payload['minaccessibility'], Activity.price <= payload['maxprice'], Activity.price >= payload['minprice']).first()
+
 
 if __name__ == "__main__":
     from server import app

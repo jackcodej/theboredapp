@@ -64,7 +64,7 @@ class Activity(db.Model):
     accessibility = db.Column(db.Float)
 
     def __repr__(self):
-        return f'<Activity activity={self.activity}, a_type={self.a_type}, price={self.price}, accessibility={self.accessibility}>'
+        return f'<Activity activity={self.activity}, a_type={self.a_type}, price={self.price}, accessibility={self.accessibility}, id={self.activity_id}>'
 
 
 if __name__ == "__main__":

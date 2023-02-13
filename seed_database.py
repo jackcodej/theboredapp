@@ -18,7 +18,7 @@ with open("data/users.json") as f:
     user_data = json.loads(f.read())
 
 # Load activities from JSON file
-with open ("data/test_activities.json") as g:
+with open ("data/complete_activities.json") as g:
     activity_data = json.loads(g.read())
 
 # Load test user history from JSON file

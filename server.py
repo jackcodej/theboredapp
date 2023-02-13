@@ -194,9 +194,8 @@ def remove_by_history_id(history_id):
 
 @app.route('/activity/search')
 def find_filtered_activity():
-    """Query for an activity from boredapi with arguments"""
+    """Query for an activity from theboredapp with arguments"""
 
-    url = 'https://www.boredapi.com/api/activity/'
 
     # Get all values from form **Not request.form because this is not a post request
     # key = request.args.get('key', '') depricated
@@ -216,7 +215,6 @@ def find_filtered_activity():
     min_accessibility, max_accessibility = helper.check_range_values(min_accessibility, max_accessibility)        
 
     payload = {
-        # 'key': key,
         'type': a_type,
         'participants': participants,
         'minprice': min_price,
@@ -225,28 +223,14 @@ def find_filtered_activity():
         'maxaccessibility': max_accessibility,
     }
 
-    res = requests.get(url, params=payload)
-    data = res.json()
-
+    # TODO: CRUD to get filtered activities -- plural so i will need to randomly choose one after I get all or I can make query only return one
     try:
-        # If activity is not already stored in the activity table create a new record
-        if not crud.get_activity_by_key(data["key"]):
-            activity = crud.create_activity(activity=data["activity"], 
-                                                key=data["key"], 
-                                                a_type=data["type"], 
-                                                link=data["link"], 
-                                                price=data["price"], 
-                                                participants=data["participants"], 
-                                                accessibility=data["accessibility"]
-                                                )
-            db.session.add(activity)
-            db.session.commit()
-        else:
-            activity = crud.get_activity_by_key(data["key"])
+        # Get activity from DB and add it to history if user is signed in
+        activity = crud.get_filtered_activities(payload)
         # If user is signed in create a new record in history
         if "user_id" in session:
             new_history_log = crud.create_history_log(user_id=session["user_id"], 
-                                                    activity_id=crud.get_activity_by_key(data["key"]).activity_id, 
+                                                    activity_id=activity.activity_id, 
                                                     last_clicked=date.today().strftime("%B %d, %Y")
                                                     )
             db.session.add(new_history_log)
@@ -254,10 +238,7 @@ def find_filtered_activity():
         return render_template('activity.html', activity=activity, alt_text_dict=alt_text_dict)
     except:
         # Using data.get instead of data['error'] to prevent error if response object does not include 'error' key
-        if data.get('error'):
-            flash("This activity doesn't exist :(")
-        else:
-            flash("An error has occurred, please try again")
+        flash("An error has occurred, please try again")
 
         return redirect("/")
 
