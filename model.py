@@ -2,6 +2,7 @@
 
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import json
 
 db = SQLAlchemy()
 
@@ -67,6 +68,30 @@ class Activity(db.Model):
         return f'<Activity activity={self.activity}, a_type={self.a_type}, price={self.price}, accessibility={self.accessibility}, id={self.activity_id}>'
 
 
+class Favorite(db.Model):
+    """A user's favorite activities"""
+
+    __tablename__ = "favorite"
+
+    favorite_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    favorite_activites = db.Column(db.ARRAY(db.Integer))
+
+    def __repr__(self):
+        return f'<Favorite user_id={self.user_id} favorite={self.favorite_id}'
+    
+    def add_favorite_activites(self, favorite):
+        self.favorite_activites.append(favorite)
+
+    def rm_favorite_activites(self, remove):
+        index = self.favorite_activites.index(remove)
+        self.favorite_activites.pop(index)
+
+    def get_favorite_activites(self):
+        return json.loads(self.favorite_activites)
+    
+
+    
 if __name__ == "__main__":
     from server import app
 

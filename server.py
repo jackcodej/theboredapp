@@ -259,6 +259,23 @@ def get_activity_by_user():
 
     return render_template('activity_history.html', user_history=user_history, activity_dict=activity_dict, alt_text_dict=alt_text_dict)
 
+# TODO: Modify route to retrieve list of a user's favorites and get each activitys' information
+@app.route('/activity/favorites')
+def get_favorites_by_user():
+    """Get the favorite activities of the user"""
+
+    activity_dict = {}
+    if "user_id" in session:
+        user_history = crud.get_user_history(session["user_id"])
+        for log in user_history:
+            activity_info = []
+            activity_info.append(crud.get_user_history_activity(log.activity_id))
+            activity_dict[log.activity_id] = activity_dict.get(log.activity_id, activity_info)
+    else:
+        flash('Please login to your account or register to have access to this feature.')
+
+    return render_template('favorite_activities.html', user_history=user_history, activity_dict=activity_dict, alt_text_dict=alt_text_dict)
+
 
 # Python3, only run the lines if server.py is ran directly
 if __name__ == "__main__":

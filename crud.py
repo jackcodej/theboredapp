@@ -1,7 +1,7 @@
 """CRUD operations"""
 
 from operator import and_
-from model import db, User, History, Activity, connect_to_db
+from model import db, User, History, Activity, Favorite, connect_to_db
 from sqlalchemy import desc, func
 import datetime
 
@@ -41,6 +41,12 @@ def get_user_history(user_id):
     """Return a user's history descending order by date."""
     
     return History.query.filter(History.user_id == user_id).order_by(desc(History.last_clicked)).all()
+
+
+def get_user_favorites(user_id):
+    """Return a list favorite activities by user_id"""
+    
+    return Favorite.get_favorite_activites(user_id)
 
 
 def get_user_history_asc(user_id):
