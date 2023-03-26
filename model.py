@@ -2,7 +2,6 @@
 
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-import json
 
 db = SQLAlchemy()
 
@@ -88,7 +87,7 @@ class Favorite(db.Model):
         self.favorite_activites.pop(index)
 
     def get_favorite_activites(self):
-        return json.loads(self.favorite_activites)
+        return self.favorite_activites
     
 
     

@@ -266,16 +266,19 @@ def get_favorites_by_user():
 
     activity_dict = {}
     if "user_id" in session:
-        user_history = crud.get_user_history(session["user_id"])
-        for log in user_history:
-            activity_info = []
-            activity_info.append(crud.get_user_history_activity(log.activity_id))
-            activity_dict[log.activity_id] = activity_dict.get(log.activity_id, activity_info)
+        try:
+            user_favorite = crud.get_user_favorites(session["user_id"])
+            for activity_id in user_favorite:
+                activity_info = []
+                activity_info.append(crud.get_user_history_activity(activity_id))
+                activity_dict[activity_id] = activity_dict.get(activity_id, activity_info)
+                return render_template('favorite_activities.html', user_favorite=user_favorite, activity_dict=activity_dict, alt_text_dict=alt_text_dict)
+        except:
+            flash('An error has occurred, could not retrieve favorites')
     else:
         flash('Please login to your account or register to have access to this feature.')
 
-    return render_template('favorite_activities.html', user_history=user_history, activity_dict=activity_dict, alt_text_dict=alt_text_dict)
-
+    return redirect("/")
 
 # Python3, only run the lines if server.py is ran directly
 if __name__ == "__main__":
