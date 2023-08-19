@@ -31,6 +31,14 @@ def create_activity(key, activity, a_type, participants, price, link, accessibil
     return activity
 
 
+def create_favorite(favorite_id, user_id, favorite_activities):
+    """Create and return a new favorite."""
+
+    favorite = Favorite(favorite_id=favorite_id, user_id= user_id, favorite_activities=favorite_activities)
+
+    return favorite
+
+
 def get_user_by_email(email):
     """Return a user by email."""
 

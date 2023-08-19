@@ -74,20 +74,20 @@ class Favorite(db.Model):
 
     favorite_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    favorite_activites = db.Column(db.ARRAY(db.Integer))
+    favorite_activities = db.Column(db.ARRAY(db.Integer))
 
     def __repr__(self):
-        return f'<Favorite user_id={self.user_id} favorite={self.favorite_id}'
+        return f'<Favorite user_id={self.user_id}, favorite={self.favorite_id}, favorite_activities={self.favorite_activities}'
     
-    def add_favorite_activites(self, favorite):
-        self.favorite_activites.append(favorite)
+    def add_favorite_activities(self, favorite):
+        self.favorite_activities.append(favorite)
 
-    def rm_favorite_activites(self, remove):
-        index = self.favorite_activites.index(remove)
-        self.favorite_activites.pop(index)
+    def rm_favorite_activities(self, remove):
+        index = self.favorite_activities.index(remove)
+        self.favorite_activities.pop(index)
 
-    def get_favorite_activites(self):
-        return self.favorite_activites
+    def get_favorite_activities(self):
+        return self.favorite_activities
     
 
     

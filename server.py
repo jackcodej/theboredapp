@@ -235,7 +235,9 @@ def find_filtered_activity():
                                                     )
             db.session.add(new_history_log)
             db.session.commit()
-        return render_template('activity.html', activity=activity, alt_text_dict=alt_text_dict)
+            # TODO: Retrieve the list of favorites and turn into set and pass to render_template
+            # favorite_set = crud.get_user_favorites(session["user_id"])
+        return render_template('activity.html', activity=activity, alt_text_dict=alt_text_dict, favorite_set='favorite_set')
     except:
         # Using data.get instead of data['error'] to prevent error if response object does not include 'error' key
         flash("An error has occurred, please try again")
@@ -259,7 +261,6 @@ def get_activity_by_user():
 
     return render_template('activity_history.html', user_history=user_history, activity_dict=activity_dict, alt_text_dict=alt_text_dict)
 
-# TODO: Modify route to retrieve list of a user's favorites and get each activitys' information
 @app.route('/activity/favorites')
 def get_favorites_by_user():
     """Get the favorite activities of the user"""
@@ -274,7 +275,7 @@ def get_favorites_by_user():
                 activity_dict[activity_id] = activity_dict.get(activity_id, activity_info)
                 return render_template('favorite_activities.html', user_favorite=user_favorite, activity_dict=activity_dict, alt_text_dict=alt_text_dict)
         except:
-            flash('An error has occurred, could not retrieve favorites')
+            flash('No favorites found, please favorite an activity before trying this feature.')
     else:
         flash('Please login to your account or register to have access to this feature.')
 

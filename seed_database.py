@@ -25,6 +25,10 @@ with open ("data/complete_activities.json") as g:
 with open ("data/histories.json") as h:
     history_data = json.loads(h.read())
 
+# Load favorites from JSON file
+with open ("data/favorites.json") as i:
+    favorite_data = json.loads(i.read())
+
 # Create a list of users to add to database
 user_list = []
 # Loop through each user in user data and grabs name,email,password,zip_code
@@ -67,10 +71,24 @@ for log in history_data:
 
     db_history_log = crud.create_history_log(user_id=user_id, activity_id= activity_id, last_clicked=last_clicked)
     history_list.append(db_history_log)
+
+# Create test record for favorites
+favorite_list = []
+for favorite in favorite_data:
+    favorite_id, user_id, favorite_activities = (
+        favorite["favorite_id"],
+        favorite["user_id"],
+        favorite["favorite_activities"],
+    )
+
+    db_favorite = crud.create_favorite(favorite_id=favorite_id, user_id= user_id, favorite_activities=favorite_activities)
+    favorite_list.append(db_favorite)
         
 model.db.session.add_all(user_list)
 model.db.session.add_all(activity_list)
 model.db.session.commit()
-#History is dependent on FK from user_list and activity_list so it needs to exist first
+# Favorite is dependent on FK from user_list so it needs to be added after the first db commit
+model.db.session.add_all(favorite_list)
+# History is dependent on FK from user_list and activity_list so it needs to exist first
 model.db.session.add_all(history_list)
 model.db.session.commit()

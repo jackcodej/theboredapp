@@ -1,0 +1,4 @@
+[
+    {"favorite_id": 1, "user_id": 1, "favorite_activities": [1,2,3,4,5]},
+    {"favorite_id": 2, "user_id": 2, "favorite_activities": [2,1]}
+]
