@@ -53,8 +53,7 @@ def get_user_history(user_id):
 
 def get_user_favorites(user_id):
     """Return a list favorite activities by user_id"""
-    
-    return Favorite.get_favorite_activites(user_id)
+    return Favorite.query.filter(Favorite.user_id == user_id).first()
 
 
 def get_user_history_asc(user_id):

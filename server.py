@@ -269,11 +269,14 @@ def get_favorites_by_user():
     if "user_id" in session:
         try:
             user_favorite = crud.get_user_favorites(session["user_id"])
-            for activity_id in user_favorite:
+            for activity_id in user_favorite.favorite_activities:
                 activity_info = []
                 activity_info.append(crud.get_user_history_activity(activity_id))
                 activity_dict[activity_id] = activity_dict.get(activity_id, activity_info)
-                return render_template('favorite_activities.html', user_favorite=user_favorite, activity_dict=activity_dict, alt_text_dict=alt_text_dict)
+            # print(activity_dict)
+            # print("STARSTARSTAR2")
+            # print(activity_dict[1])
+            return render_template('favorite_activities.html', activity_dict=activity_dict, alt_text_dict=alt_text_dict)
         except:
             flash('No favorites found, please favorite an activity before trying this feature.')
     else:
