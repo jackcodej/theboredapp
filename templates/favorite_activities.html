@@ -1,18 +1,22 @@
 {% extends 'base.html' %}
 
-{% block title %} - My favorites{% endblock %}
+{% block title %}My favorites{% endblock %}
 
 {% block body %}
-<h3 class="text-center mt-5" style="position:center;">Most recent to oldest</h3>
+<h3 class="text-center mt-5" style="position:center;">My favorite activities</h3>
 <div class="container" style="display:flex; flex-wrap:wrap; align-content:flex-start;">
 {% for activity in activity_dict %}
 <div class="card mt-5" style="width: 18rem; margin-left:auto; margin-right:auto; justify-content: space-evenly;">
+  <img class="card-img-top text-center card-img-wrapper" src="../../static/imgs/{{activity_dict[activity][0].a_type}}.jpg" alt="{{ alt_text_dict[activity_dict[activity][0].a_type] }}">
     <div class="card-body">
-      <h5 class="card-title">{{  activity_dict[activity] }}</h5>
+      <h5 class="card-title">{{  activity_dict[activity][0].activity }}</h5>
       <ul class="list-group list-group-flush">
+        <li class="list-group-item">Test</li>
       </ul>
     </div>
     <div class="row">
+      <div class="col"><button type="button" class="btn btn-info btn-history" value="goToActivity"><a href="/activity/{{activity_dict[activity][0].activity_id}}">Read more</a></button></div>
+      <div class="col"><button type="button" class="btn btn-danger btn-history" style="margin-right:0" value="Delete"><a href="/remove/favorite/{{activity_dict[activity][0].activity_id}}">Unfavorite</a></button></div>
     </div>
   </div>
 {% endfor %}

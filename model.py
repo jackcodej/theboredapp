@@ -72,7 +72,7 @@ class Favorite(db.Model):
 
     __tablename__ = "favorite"
 
-    favorite_id = db.Column(db.Integer, primary_key=True)
+    favorite_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     favorite_activities = db.Column(db.ARRAY(db.Integer))
 
@@ -81,10 +81,12 @@ class Favorite(db.Model):
     
     def add_favorite_activities(self, favorite):
         self.favorite_activities.append(favorite)
+        return self.favorite_activities
 
     def rm_favorite_activities(self, remove):
         index = self.favorite_activities.index(remove)
         self.favorite_activities.pop(index)
+        return self.favorite_activities
 
     def get_favorite_activities(self):
         return self.favorite_activities

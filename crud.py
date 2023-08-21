@@ -128,6 +128,16 @@ def get_filtered_activities(payload):
     else:
         return Activity.query.filter(Activity.accessibility <= payload['maxaccessibility'], Activity.accessibility >= payload['minaccessibility'], Activity.price <= payload['maxprice'], Activity.price >= payload['minprice']).first()
 
+# TODO: Need to remove a given activity_id from a specific user's favorite list
+def remove_favorite_status(user_id, activity_id):
+    """Remove favorite status from a user's favorite list."""
+    favorites = get_user_favorites(user_id)
+    favorites.rm_favorite_activites(activity_id)
+    
+    db.session.commit()
+
+# TODO: def add_favorite_status(user_id, activity_id):
+
 
 if __name__ == "__main__":
     from server import app
