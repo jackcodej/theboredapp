@@ -26,8 +26,8 @@ with open ("data/histories.json") as h:
     history_data = json.loads(h.read())
 
 # Load favorites from JSON file
-with open ("data/favorites.json") as i:
-    favorite_data = json.loads(i.read())
+# with open ("data/favorites.json") as i:
+#     favorite_data = json.loads(i.read())
 
 # Create a list of users to add to database
 user_list = []
@@ -73,22 +73,22 @@ for log in history_data:
     history_list.append(db_history_log)
 
 # Create test record for favorites
-favorite_list = []
-for favorite in favorite_data:
-    favorite_id, user_id, favorite_activities = (
-        favorite["favorite_id"],
-        favorite["user_id"],
-        favorite["favorite_activities"],
-    )
+# favorite_list = []
+# for favorite in favorite_data:
+#     favorite_id, user_id, favorite_activities = (
+#         favorite["favorite_id"],
+#         favorite["user_id"],
+#         favorite["favorite_activities"],
+#     )
 
-    db_favorite = crud.create_favorite(favorite_id=favorite_id, user_id= user_id, favorite_activities=favorite_activities)
-    favorite_list.append(db_favorite)
+#     db_favorite = crud.create_favorite(favorite_id=favorite_id, user_id= user_id, favorite_activities=favorite_activities)
+#     favorite_list.append(db_favorite)
         
 model.db.session.add_all(user_list)
 model.db.session.add_all(activity_list)
 model.db.session.commit()
 # Favorite is dependent on FK from user_list so it needs to be added after the first db commit
-model.db.session.add_all(favorite_list)
+# model.db.session.add_all(favorite_list)
 # History is dependent on FK from user_list and activity_list so it needs to exist first
 model.db.session.add_all(history_list)
 model.db.session.commit()

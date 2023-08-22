@@ -33,6 +33,8 @@ class User(db.Model):
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email}>'
 
+    favorite = db.relationship("Favorite", back_populates="user")
+
 
 class History(db.Model):
     """A user's history."""
@@ -73,7 +75,7 @@ class Favorite(db.Model):
     __tablename__ = "favorite"
 
     favorite_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
     favorite_activities = db.Column(db.ARRAY(db.Integer))
 
     def __repr__(self):
@@ -91,12 +93,14 @@ class Favorite(db.Model):
     def get_favorite_activities(self):
         return self.favorite_activities
     
-
+    user = db.relationship("User", back_populates="favorite")
+    
     
 if __name__ == "__main__":
     from server import app
 
     # 'echo=False' will reduce program's SQLAlchemy output for queries
+    echo=False
     connect_to_db(app)
 
     # Investigate why I needed to have this here --> Seems I need to have it everywhere

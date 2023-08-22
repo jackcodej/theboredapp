@@ -15,13 +15,11 @@
         {% if activity.link %}
         <li class="list-group-item">Link: <a href="{{ activity.link }}">Get started here</a></li>
         {% endif %}
-        <!-- TODO: Add a boolean flag to determine if we show favorite or unfavorite -->
-        <!-- if activity.activity_id in the favorite_set -->
         {% if activity.activity_id == activity.activity_id%}
-        <li class="list-group-item"><a href="{{ activity.link }}">Favorite</a></li>
+        <li class="list-group-item"><a href="/add/favorite/{{ activity.activity_id }}">Favorite</a></li>
         {% endif %}
         {% if activity.activity_id == activity.activity_id%}
-        <li class="list-group-item"><a href="{{ activity.link }}">Unfavorite</a></li>
+        <li class="list-group-item"><a href="/remove/favorite/{{ activity.activity_id }}">Unfavorite</a></li>
         {% endif %}
       </ul>
     </div>

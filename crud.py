@@ -31,10 +31,10 @@ def create_activity(key, activity, a_type, participants, price, link, accessibil
     return activity
 
 
-def create_favorite(favorite_id, user_id, favorite_activities):
+def create_favorite(user_id, favorite_activities):
     """Create and return a new favorite."""
 
-    favorite = Favorite(favorite_id=favorite_id, user_id= user_id, favorite_activities=favorite_activities)
+    favorite = Favorite(user_id= user_id, favorite_activities=favorite_activities)
 
     return favorite
 
@@ -131,12 +131,20 @@ def get_filtered_activities(payload):
 # TODO: Need to remove a given activity_id from a specific user's favorite list
 def remove_favorite_status(user_id, activity_id):
     """Remove favorite status from a user's favorite list."""
-    favorites = get_user_favorites(user_id)
-    favorites.rm_favorite_activites(activity_id)
-    
+    user = User.query.filter(User.user_id == user_id).first()
+    user.favorite[0].rm_favorite_activities(activity_id)
+    db.session.add(user.favorite[0])
     db.session.commit()
 
-# TODO: def add_favorite_status(user_id, activity_id):
+    return user.favorite[0]
+
+# TODO: Inc
+def add_favorite_status(user_id, activity_id):
+    """Add favorite status to a user's favorite list."""
+    user = User.query.filter(User.user_id == user_id).first()
+    user.favorite[0].add_favorite_activities(activity_id)
+    
+    return user.favorite[0]
 
 
 if __name__ == "__main__":
