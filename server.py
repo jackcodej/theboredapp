@@ -192,19 +192,23 @@ def remove_by_history_id(history_id):
     return get_activity_by_user()
 
 
-# TODO: Add route for adding an activity
+# TODO: Complete route for adding an activity when a user already has an existing favorite
 @app.route('/add/favorite/<activity_id>')
 def add_favorite_by_activity_id(activity_id):
     """Add favorite status to an activity."""
     try:
         if crud.get_user_favorites(session["user_id"]) == None:
-            crud.create_favorite(user_id=session["user_id"], favorite_activities=[activity_id])
+            new_favorite = crud.create_favorite(user_id=session["user_id"], favorite_activities=[activity_id])
+            db.session.add(new_favorite)
+            db.session.commit()
         else:
-            crud.add_favorite_status()
+            new_favorite = crud.add_favorite_status(user_id=session["user_id"], activity_id=activity_id)
+            db.session.add(new_favorite)
+            db.session.commit()
     except:
         flash("An error has occured, please try again (favorite_error -add)")
 
-    return redirect("/activity/search")
+    return redirect("/")
 
 # TODO: Complete removal of an activity
 @app.route('/remove/favorite/<activity_id>')

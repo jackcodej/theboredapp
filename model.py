@@ -81,14 +81,14 @@ class Favorite(db.Model):
     def __repr__(self):
         return f'<Favorite user_id={self.user_id}, favorite={self.favorite_id}, favorite_activities={self.favorite_activities}'
     
-    def add_favorite_activities(self, favorite):
-        self.favorite_activities.append(favorite)
-        return self.favorite_activities
+    def add_favorite_activities(self, activity_id):
+        self.favorite_activities.append(activity_id)
+        return self
 
-    def rm_favorite_activities(self, remove):
-        index = self.favorite_activities.index(remove)
+    def rm_favorite_activities(self, activity_id):
+        index = self.favorite_activities.index(activity_id)
         self.favorite_activities.pop(index)
-        return self.favorite_activities
+        return self
 
     def get_favorite_activities(self):
         return self.favorite_activities

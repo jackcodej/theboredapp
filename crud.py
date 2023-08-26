@@ -142,10 +142,11 @@ def remove_favorite_status(user_id, activity_id):
 def add_favorite_status(user_id, activity_id):
     """Add favorite status to a user's favorite list."""
     user = User.query.filter(User.user_id == user_id).first()
-    user.favorite[0].add_favorite_activities(activity_id)
-    
-    return user.favorite[0]
+    new_fav = user.favorite[0].add_favorite_activities(activity_id)
+    old_fav = user.favorite[0].add_favorite_activities(activity_id)
+    db.session.delete(old_fav)
 
+    return new_fav
 
 if __name__ == "__main__":
     from server import app

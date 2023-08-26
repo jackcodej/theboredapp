@@ -15,6 +15,7 @@
         {% if activity.link %}
         <li class="list-group-item">Link: <a href="{{ activity.link }}">Get started here</a></li>
         {% endif %}
+        <!-- TODO Modify buttons to hide or show based on if currently favorited by user -->
         {% if activity.activity_id == activity.activity_id%}
         <li class="list-group-item"><a href="/add/favorite/{{ activity.activity_id }}">Favorite</a></li>
         {% endif %}
