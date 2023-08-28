@@ -149,3 +149,9 @@ if (document.querySelector('#user_activities')){
 }
 
 
+function thumbs_down(x) {
+  x.classList.toggle("fa-thumbs-down");
+}
+function thumbs_up(x) {
+  x.classList.toggle("fa-thumbs-up");
+}

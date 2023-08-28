@@ -11,6 +11,16 @@
     object-fit: contain;
 }
 
+.fa-thumbs-up{
+    font-size: 35px;
+    text-decoration:none
+}
+
+.fa-thumbs-down{
+    font-size: 35px;
+    text-decoration:none
+}
+
 .get-activity-button{
     z-index: 5;
 }

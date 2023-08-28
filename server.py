@@ -108,6 +108,7 @@ def sign_in():
     # Else store user email in session 
         session["user_email"] = user.email
         session["user_id"] = user.user_id
+        update_favorites()
         flash(f"Welcome back, {user.name}")
 
     return redirect("/")
@@ -139,11 +140,11 @@ def get_activity_by_id(activity_id):
                                                     )
             db.session.add(new_history_log)
             db.session.commit()
-        return render_template('activity.html', activity=activity, alt_text_dict=alt_text_dict)
+        return render_template('activity.html', activity=activity, alt_text_dict=alt_text_dict, favorites=session["favorites"])
     except:
-        flash("An error has occurred, please try again")
+        flash("An error has occurred, please try again (get_activity_by_id)")
 
-    return render_template('activity.html', activity=activity, alt_text_dict=alt_text_dict)
+    return render_template('activity.html', activity=activity, alt_text_dict=alt_text_dict, favorites=session["favorites"])
 
 
 @app.route('/activity/popular')
@@ -187,7 +188,7 @@ def remove_by_history_id(history_id):
         db.session.commit()
         flash(f"The activity was removed from your history")
     except:
-        flash("An error has occurred, please try again")
+        flash("An error has occurred, please try again (remove_by_history_id)")
 
     return get_activity_by_user()
 
@@ -201,7 +202,8 @@ def add_favorite_by_activity_id(activity_id):
             db.session.add(new_favorite)
             db.session.commit()
     except:
-        flash("An error has occured, please try again (favorite_error -add)")
+        flash("An error has occured, please try again (add_favorite_by_activity_id)")
+    update_favorites()
 
     return redirect("/")
 
@@ -213,8 +215,9 @@ def remove_favorite_by_activity_id(activity_id):
     try:
         crud.remove_favorite_status(session["user_id"], activity_id)
     except:
-        flash("An error has occured, please try again (favorite_error -remove)")
-    
+        flash("An error has occured, please try again (remove_favorite_by_activity_id)")
+    update_favorites()
+
     return get_favorites_by_user()
 
 
@@ -261,10 +264,10 @@ def find_filtered_activity():
                                                     )
             db.session.add(new_history_log)
             db.session.commit()
-        return render_template('activity.html', activity=activity, alt_text_dict=alt_text_dict)
+        return render_template('activity.html', activity=activity, alt_text_dict=alt_text_dict, favorites=session["favorites"])
     except:
         # Using data.get instead of data['error'] to prevent error if response object does not include 'error' key
-        flash("An error has occurred, please try again")
+        flash("An error has occurred, please try again (find_filtered_activity)")
 
         return redirect("/")
 
@@ -302,8 +305,18 @@ def get_favorites_by_user():
             flash('No favorites found, please favorite an activity before trying this feature.')
     else:
         flash('Please login to your account or register to have access to this feature.')
-        
+    update_favorites()
+
     return render_template('favorite_activities.html', activity_dict=activity_dict, alt_text_dict=alt_text_dict)
+
+
+def update_favorites():
+    """Store latest favorites of the user"""
+
+    f = []
+    for favorite in crud.get_user_favorites(session["user_id"]):
+        f.append(favorite.activity_id)
+    session["favorites"] = f
 
 
 # Python3, only run the lines if server.py is ran directly
