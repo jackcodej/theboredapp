@@ -192,17 +192,12 @@ def remove_by_history_id(history_id):
     return get_activity_by_user()
 
 
-# TODO: Complete route for adding an activity when a user already has an existing favorite
+
 @app.route('/add/favorite/<activity_id>')
 def add_favorite_by_activity_id(activity_id):
     """Add favorite status to an activity."""
     try:
-        if crud.get_user_favorites(session["user_id"]) == None:
-            new_favorite = crud.create_favorite(user_id=session["user_id"], favorite_activities=[activity_id])
-            db.session.add(new_favorite)
-            db.session.commit()
-        else:
-            new_favorite = crud.add_favorite_status(user_id=session["user_id"], activity_id=activity_id)
+            new_favorite = crud.create_favorite(user_id=session["user_id"], activity_id=activity_id)
             db.session.add(new_favorite)
             db.session.commit()
     except:
@@ -210,7 +205,7 @@ def add_favorite_by_activity_id(activity_id):
 
     return redirect("/")
 
-# TODO: Complete removal of an activity
+
 @app.route('/remove/favorite/<activity_id>')
 def remove_favorite_by_activity_id(activity_id):
     """Remove favorite status from an activity."""
@@ -298,11 +293,11 @@ def get_favorites_by_user():
     activity_dict = {}
     if "user_id" in session:
         try:
-            user_favorite = crud.get_user_favorites(session["user_id"])
-            for activity_id in user_favorite.favorite_activities:
+            user_favorites = crud.get_user_favorites(session["user_id"])
+            for favorite in user_favorites:
                 activity_info = []
-                activity_info.append(crud.get_user_history_activity(activity_id))
-                activity_dict[activity_id] = activity_dict.get(activity_id, activity_info)
+                activity_info.append(favorite)
+                activity_dict[favorite.activity_id] = activity_dict.get(favorite.activity_id, crud.get_activity_by_id(favorite.activity_id))
         except:
             flash('No favorites found, please favorite an activity before trying this feature.')
     else:

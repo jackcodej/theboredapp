@@ -33,7 +33,7 @@ class User(db.Model):
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email}>'
 
-    favorite = db.relationship("Favorite", back_populates="user")
+    favorites = db.relationship("Favorite", back_populates="user")
 
 
 class History(db.Model):
@@ -76,24 +76,12 @@ class Favorite(db.Model):
 
     favorite_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
-    favorite_activities = db.Column(db.ARRAY(db.Integer))
+    activity_id = db.Column(db.Integer,db.ForeignKey("activity.activity_id"), nullable=False)  # Single activity ID
 
     def __repr__(self):
-        return f'<Favorite user_id={self.user_id}, favorite={self.favorite_id}, favorite_activities={self.favorite_activities}'
+        return f'<Favorite user_id={self.user_id}, favorite={self.favorite_id}, activity_id={self.activity_id}'
     
-    def add_favorite_activities(self, activity_id):
-        self.favorite_activities.append(activity_id)
-        return self
-
-    def rm_favorite_activities(self, activity_id):
-        index = self.favorite_activities.index(activity_id)
-        self.favorite_activities.pop(index)
-        return self
-
-    def get_favorite_activities(self):
-        return self.favorite_activities
-    
-    user = db.relationship("User", back_populates="favorite")
+    user = db.relationship("User", back_populates="favorites")
     
     
 if __name__ == "__main__":

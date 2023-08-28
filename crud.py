@@ -31,12 +31,22 @@ def create_activity(key, activity, a_type, participants, price, link, accessibil
     return activity
 
 
-def create_favorite(user_id, favorite_activities):
+def create_favorite(user_id, activity_id):
     """Create and return a new favorite."""
 
-    favorite = Favorite(user_id= user_id, favorite_activities=favorite_activities)
+    favorite = Favorite(user_id=user_id, activity_id=activity_id)
 
     return favorite
+
+
+def remove_favorite_status(user_id, activity_id):
+    """Remove favorite status from a user's favorite list."""
+
+    favorite = Favorite.query.filter(Favorite.user_id == user_id, Favorite.activity_id == activity_id).first()
+    db.session.delete(favorite)
+    db.session.commit()
+
+    return f"Deleted {activity_id} from {user_id}'s favorites"
 
 
 def get_user_by_email(email):
@@ -53,7 +63,7 @@ def get_user_history(user_id):
 
 def get_user_favorites(user_id):
     """Return a list favorite activities by user_id"""
-    return Favorite.query.filter(Favorite.user_id == user_id).first()
+    return Favorite.query.filter(Favorite.user_id == user_id).all()
 
 
 def get_user_history_asc(user_id):
@@ -128,25 +138,6 @@ def get_filtered_activities(payload):
     else:
         return Activity.query.filter(Activity.accessibility <= payload['maxaccessibility'], Activity.accessibility >= payload['minaccessibility'], Activity.price <= payload['maxprice'], Activity.price >= payload['minprice']).first()
 
-# TODO: Need to remove a given activity_id from a specific user's favorite list
-def remove_favorite_status(user_id, activity_id):
-    """Remove favorite status from a user's favorite list."""
-    user = User.query.filter(User.user_id == user_id).first()
-    user.favorite[0].rm_favorite_activities(activity_id)
-    db.session.add(user.favorite[0])
-    db.session.commit()
-
-    return user.favorite[0]
-
-# TODO: Inc
-def add_favorite_status(user_id, activity_id):
-    """Add favorite status to a user's favorite list."""
-    user = User.query.filter(User.user_id == user_id).first()
-    new_fav = user.favorite[0].add_favorite_activities(activity_id)
-    old_fav = user.favorite[0].add_favorite_activities(activity_id)
-    db.session.delete(old_fav)
-
-    return new_fav
 
 if __name__ == "__main__":
     from server import app
