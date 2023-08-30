@@ -4,18 +4,11 @@
 {% block body %}
 
 <h1 class="text-center pt-5 pb-5">Welcome to the bored application!</h1>
-{% if "user_id" not in session %}
-{% endif %}
 
     <!-- Form for users to make 'filtered' queries to boredapi -->
     <div id="form_wrapper" style="min-width:50%; max-height:50%;">
       <h5 class="text-center pt-3">Fill out this form to get an activity catered to you!</h5>
       <form style="width:40%; margin-left:auto; margin-right:auto; height:400px;"action="/activity/search">
-        <!-- Key is not user friendly depreciated -->
-        <!-- <label>Key</label>
-        <div class="row">
-          <div class="col"><input placeholder="key" type="number" class="form-control" name="key"></div>
-        </div> -->
           <div class="row">
             <div class="col">
               <div class="col">

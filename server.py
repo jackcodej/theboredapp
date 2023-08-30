@@ -319,6 +319,13 @@ def update_favorites():
     session["favorites"] = f
 
 
+@app.route('/activity/add')
+def add_activity():
+    """Navigate to the add activity page"""
+
+    return render_template('add_activity.html')
+
+
 # Python3, only run the lines if server.py is ran directly
 if __name__ == "__main__":
     connect_to_db(app)
