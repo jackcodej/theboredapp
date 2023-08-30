@@ -56,7 +56,7 @@ class Activity(db.Model):
     __tablename__ = "activity"
 
     activity_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    key = db.Column(db.Integer, nullable=False, unique=True)
+    key = db.Column(db.Integer, nullable=True, unique=True)
     activity = db.Column(db.String)
     # Named a_type instead of type to not overwrite 'type' namespace
     a_type = db.Column(db.String)

@@ -113,6 +113,25 @@ def sign_in():
 
     return redirect("/")
 
+# TODO: Add additional validation and make the form match the query for an activity, for consistency!
+# TODO: Make sure there is no duplicates in Activity name before posting, if a dupe exists route them there
+@app.route('/add-activity', methods=["POST"])
+def add_activity():
+    """Add an activity."""
+
+    activity = request.form.get("activity")
+    accessibility = request.form.get("accessibility")
+    type = request.form.get("a_type")
+    participants = request.form.get("participants")
+    price = request.form.get("price")
+    link = request.form.get("link")
+
+    new_activity = crud.create_activity(activity=activity, a_type=type, participants=participants, price=price, link=link, accessibility=accessibility, key=None)
+    db.session.add(new_activity)
+    db.session.commit()
+
+    return render_template('activity.html', activity=new_activity, alt_text_dict=alt_text_dict, favorites=session["favorites"])
+    
 
 @app.route('/activity/random')
 def get_random_activity():
@@ -197,6 +216,7 @@ def remove_by_history_id(history_id):
 @app.route('/add/favorite/<activity_id>')
 def add_favorite_by_activity_id(activity_id):
     """Add favorite status to an activity."""
+
     try:
             new_favorite = crud.create_favorite(user_id=session["user_id"], activity_id=activity_id)
             db.session.add(new_favorite)
@@ -224,7 +244,6 @@ def remove_favorite_by_activity_id(activity_id):
 @app.route('/activity/search')
 def find_filtered_activity():
     """Query for an activity from theboredapp with arguments"""
-
 
     # Get all values from form **Not request.form because this is not a post request
     # key = request.args.get('key', '') depricated
@@ -320,7 +339,7 @@ def update_favorites():
 
 
 @app.route('/activity/add')
-def add_activity():
+def show_add_activity():
     """Navigate to the add activity page"""
 
     return render_template('add_activity.html')
