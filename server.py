@@ -114,7 +114,6 @@ def sign_in():
     return redirect("/")
 
 # TODO: Add additional validation and make the form match the query for an activity, for consistency!
-# TODO: Make sure there is no duplicates in Activity name before posting, if a dupe exists route them there
 @app.route('/add-activity', methods=["POST"])
 def add_activity():
     """Add an activity."""
@@ -126,9 +125,23 @@ def add_activity():
     price = request.form.get("price")
     link = request.form.get("link")
 
-    new_activity = crud.create_activity(activity=activity, a_type=type, participants=participants, price=price, link=link, accessibility=accessibility, key=None)
-    db.session.add(new_activity)
-    db.session.commit()
+    if not crud.get_activity_by_name(activity):
+        new_activity = crud.create_activity(activity=activity, a_type=type, participants=participants, price=price, link=link, accessibility=accessibility, key=None)
+        db.session.add(new_activity)
+        db.session.commit()
+    else:
+        flash("The proposed activity already exists! Here is the activity, favorite it to access quickly in the future or check your history!")
+        new_activity = crud.get_activity_by_name(activity)
+
+    try:
+        new_history_log = crud.create_history_log(user_id=session["user_id"], 
+                                                activity_id=new_activity.activity_id, 
+                                                last_clicked=date.today().strftime("%B %d, %Y")
+                                                )
+        db.session.add(new_history_log)
+        db.session.commit()
+    except:
+        flash("An error has occurred, please try again (add-activity)")
 
     return render_template('activity.html', activity=new_activity, alt_text_dict=alt_text_dict, favorites=session["favorites"])
     

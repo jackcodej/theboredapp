@@ -98,6 +98,12 @@ def get_activity_by_id(activity_id):
     return Activity.query.filter(Activity.activity_id == activity_id).first()
 
 
+def get_activity_by_name(name):
+    """Return a specific activity by its name."""
+
+    return Activity.query.filter(Activity.activity == name).first()
+
+
 def get_activity_by_key(key):
     """Return a specific activity by key."""
 
