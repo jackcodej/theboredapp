@@ -16,6 +16,7 @@
         <li class="list-group-item">Link: <a href="{{ activity.link }}">Get started here</a></li>
         {% endif %}
         <!-- TODO Change thumbs button to a heart overlay over the image card and make the same changes to rest of cards -->
+        <!-- Change accesssibility level to human readible values -->
          {% if activity.activity_id in favorites %}
          <a onclick="thumbs_down(this)" a href="/remove/favorite/{{ activity.activity_id }}" class="fa fa-thumbs-up"></a>
          {% else %}

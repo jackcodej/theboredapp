@@ -120,6 +120,13 @@ def add_activity():
 
     activity = request.form.get("activity")
     accessibility = request.form.get("accessibility")
+    # Convert english accessibility level to numerical.
+    if accessibility == "few-to-no":
+        accessibility = 33
+    elif accessibility == "minor":
+        accessibility = 66
+    else:
+        accessibility = 100
     type = request.form.get("a_type")
     participants = request.form.get("participants")
     price = request.form.get("price")
@@ -260,6 +267,7 @@ def find_filtered_activity():
 
     # Get all values from form **Not request.form because this is not a post request
     # key = request.args.get('key', '') depricated
+    # TODO: Change range values on form from range slider to a select menu and convert values to numerical value, may need to make changes to crud.get_filtered_activites
     a_type = request.args.get('a_type', '')
     participants = request.args.get('participants', '')
     min_price = 0
