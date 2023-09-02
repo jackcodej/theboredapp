@@ -1,12 +1,24 @@
 const AddActivityForm = () => {
 
+  const [isValid, setIsValid] = React.useState(false);
   const [activity, setActivity] = React.useState("");
-  const [accessibility, setAccessibility] = React.useState("");
-  const [type, setType] = React.useState("");
-  const [participants, setParticipants] = React.useState("");
   const [price, setPrice] = React.useState("");
   const [link, setLink] = React.useState("");
   
+  // Check if activity name is valid
+  const activityValidation = () =>{
+    // lowercase and uppercase alphabet allowing spaces
+    const regex = /^[A-Za-z ]+$/
+    return regex.test(activity)
+  }
+
+  React.useEffect(() => {
+    if (activity !== "" && price !== "" && activityValidation()){
+      setIsValid(true);
+    } else{
+      setIsValid(false);
+    }
+  })
 
     return (
     <section>
@@ -85,7 +97,7 @@ const AddActivityForm = () => {
               <div className="col-sm-3"><label className="form-label">Link</label></div>
               <div className="col-sm-10"><div className="new-activity-form-error" id="linkError"></div></div>
             </div>
-            <div><input className="btn btn-primary" type="submit" value="Add Activity" /></div>
+            <div><input className="btn btn-primary" type="submit" value="Add Activity" disabled={!isValid}/></div>
         </div>
         </form>
     </section>
