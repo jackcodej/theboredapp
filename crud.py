@@ -136,13 +136,13 @@ def get_log_by_history_id(history_id):
 def get_filtered_activities(payload):
     """Get activity using payload to filter."""
     if payload.get('type', None) and payload.get('participants', None):
-        return Activity.query.filter(Activity.accessibility <= payload['maxaccessibility'], Activity.accessibility >= payload['minaccessibility'], Activity.price <= payload['maxprice'], Activity.price >= payload['minprice'], Activity.a_type == payload['type'], Activity.participants == payload['participants']).first()
+        return Activity.order_by(func.random()).query.filter(Activity.accessibility <= payload['maxaccessibility'], Activity.accessibility >= payload['minaccessibility'], Activity.price <= payload['maxprice'], Activity.price >= payload['minprice'], Activity.a_type == payload['type'], Activity.participants == payload['participants']).first()
     elif payload.get('type', None):
-        return Activity.query.filter(Activity.accessibility <= payload['maxaccessibility'], Activity.accessibility >= payload['minaccessibility'], Activity.price <= payload['maxprice'], Activity.price >= payload['minprice'], Activity.a_type == payload['type']).first()
+        return Activity.order_by(func.random()).query.filter(Activity.accessibility <= payload['maxaccessibility'], Activity.accessibility >= payload['minaccessibility'], Activity.price <= payload['maxprice'], Activity.price >= payload['minprice'], Activity.a_type == payload['type']).first()
     elif payload.get('participants', None):
-        return Activity.query.filter(Activity.accessibility <= payload['maxaccessibility'], Activity.accessibility >= payload['minaccessibility'], Activity.price <= payload['maxprice'], Activity.price >= payload['minprice'], Activity.participants == payload['participants']).first()
+        return Activity.query.order_by(func.random()).filter(Activity.accessibility <= payload['maxaccessibility'], Activity.accessibility >= payload['minaccessibility'], Activity.price <= payload['maxprice'], Activity.price >= payload['minprice'], Activity.participants == payload['participants']).first()
     else:
-        return Activity.query.filter(Activity.accessibility <= payload['maxaccessibility'], Activity.accessibility >= payload['minaccessibility'], Activity.price <= payload['maxprice'], Activity.price >= payload['minprice']).first()
+        return Activity.query.order_by(func.random()).filter(Activity.accessibility <= payload['maxaccessibility'], Activity.accessibility >= payload['minaccessibility'], Activity.price <= payload['maxprice'], Activity.price >= payload['minprice']).first()
 
 
 if __name__ == "__main__":

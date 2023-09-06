@@ -292,7 +292,6 @@ def find_filtered_activity():
         'maxaccessibility': max_accessibility,
     }
 
-    # TODO: CRUD to get filtered activities -- plural so i will need to randomly choose one after I get all or I can make query only return one
     try:
         # Get activity from DB and add it to history if user is signed in
         activity = crud.get_filtered_activities(payload)
